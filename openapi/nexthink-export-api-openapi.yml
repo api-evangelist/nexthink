@@ -1,0 +1,263 @@
+openapi: 3.0.1
+info:
+  title: Campaigns Export API
+  version: 1.0.0
+servers:
+- url: https://{instance}.api.{region}.nexthink.cloud
+  description: Nexthink Infinity instance API host
+  variables:
+    instance:
+      default: instance
+      description: Your Nexthink instance name
+    region:
+      default: us
+      enum:
+      - us
+      - eu
+      - pac
+      - meta
+      description: Nexthink cloud region
+security:
+- bearerAuth: []
+tags:
+- name: Export
+paths:
+  /api/v1/nql/export:
+    get:
+      tags:
+      - Export
+      summary: Export an NQL
+      description: Starts the execution of a query that will finish with the export of the results to a file in S3. The service response contains an identifier that can be used in the "status" operation to obtain the URL of the file with the results.
+      operationId: export-get
+      parameters:
+      - name: queryId
+        in: query
+        description: Identifier of the query which is going to be executed.
+        required: true
+        schema:
+          type: string
+      - name: parameters
+        in: query
+        description: 'Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\"alert_name\": \"my_alert\", \"alert_status\": \"Open\"}"'
+        required: false
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+      - name: compression
+        in: query
+        description: 'The compression algorithm for the export. If not set, no compression is applied. Allowed values: `NONE`, `ZSTD`, `GZIP`.'
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+          nullable: false
+      responses:
+        '200':
+          description: OK - Successful execution.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NqlApiExportResponse'
+        '401':
+          description: Unauthorized - No valid authentication credentials.
+        '403':
+          description: No permission - Not authorized to execute queries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found - No query associated with that ID.
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable.
+    post:
+      tags:
+      - Export
+      summary: Export an NQL
+      description: Starts the execution of a query that will finish with the export of the results to a file in S3. The service response contains an identifier that can be used in the "status" operation to obtain the URL of the file with the results.
+      operationId: export-post
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+          nullable: false
+      requestBody:
+        description: The configuration of the execution
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NqlApiExportRequest'
+        required: true
+      responses:
+        '200':
+          description: OK - Successful execution.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NqlApiExportResponse'
+        '401':
+          description: Unauthorized - No valid authentication credentials.
+        '403':
+          description: No permission - Not authorized to execute queries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found - No query associated with that ID.
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable.
+  /api/v1/nql/status/{exportId}:
+    get:
+      tags:
+      - Export
+      summary: Status of an export
+      description: Retrieve the status of an export given its identifier.
+      operationId: status
+      parameters:
+      - name: exportId
+        in: path
+        description: Export identifier
+        required: true
+        schema:
+          type: string
+          nullable: false
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+          nullable: false
+      responses:
+        '200':
+          description: OK - Successful execution.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NqlApiStatusResponse'
+          headers: {}
+        '206':
+          description: Partial Content - The query results were truncated because the maximum number of results allowed by the license was reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NqlApiStatusResponse'
+          headers: {}
+        '401':
+          description: Unauthorized - No valid authentication credentials.
+        '403':
+          description: No permission - Not authorized to execute queries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found - No export associated with that ID.
+        '429':
+          description: Too many requests - The user has reached the daily request limit.
+          headers:
+            retry-after:
+              schema:
+                type: string
+              description: The date and time the client should wait before retrying the request.
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable.
+components:
+  schemas:
+    NqlApiExportRequest:
+      required:
+      - queryId
+      type: object
+      properties:
+        queryId:
+          maxLength: 255
+          minLength: 1
+          pattern: ^#[a-z0-9_]{2,255}$
+          type: string
+          description: Identifier of the query which is going to be executed.
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\"alert_name\": \"my_alert\", \"alert_status\": \"Open\"}"'
+        compression:
+          type: string
+          description: The compression algorithm for the export. If not set, no compression is applied.
+          enum:
+          - ZSTD
+          - GZIP
+          - NONE
+          nullable: true
+    NqlApiStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the export
+          enum:
+          - SUBMITTED
+          - IN_PROGRESS
+          - ERROR
+          - COMPLETED
+          nullable: false
+        resultsFileUrl:
+          type: string
+          description: URL of the file with the content once the export has been completed.
+          nullable: true
+        errorDescription:
+          type: string
+          description: Message with the description of the error.
+          nullable: true
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message with the description of the error.
+        code:
+          type: integer
+          description: Error code
+          format: int32
+        source:
+          type: string
+          description: Source of the error, if any.
+    NqlApiExportResponse:
+      type: object
+      properties:
+        exportId:
+          type: string
+          description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+x-apievangelist-source: https://docs.nexthink.com/api/llms.txt
+x-apievangelist-method: searched
+x-apievangelist-generated: '2026-07-20'
