@@ -1,27 +1,195 @@
 aid: nexthink
 name: Nexthink
-description: 'Nexthink is a company surfaced as a portfolio company of index-ventures and added to the
-  API Evangelist network as a stub for enrichment. Sector: business-applications. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  Nexthink is a digital employee experience (DEX) management company. Its Infinity
+  platform combines real-time endpoint analytics, employee sentiment, and automated
+  remediation so IT teams can proactively detect and fix issues across every device.
+  Nexthink exposes a set of OAuth 2.0-secured public APIs — NQL (query), Remote
+  Actions, Workflows, Enrichment, Campaigns, Data Management, and Spark — that let
+  external tools pull DEX data and drive endpoint automation. Backed by Index
+  Ventures; added to the API Evangelist network and enriched from Nexthink's
+  published developer documentation.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.nexthink.com/favicon.ico
 url: https://raw.githubusercontent.com/api-evangelist/nexthink/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - index-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: portfolio-lead-with-published-api-surface
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
 - Business Applications
-apis: []
+- Digital Employee Experience
+- Endpoint Analytics
+- IT Operations
+- Automation
+- Observability
+- DEX
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: nexthink:nexthink-campaigns-api
+  name: Nexthink Campaigns API
+  description: The Campaigns API from Nexthink — 1 operation(s) for campaigns.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-campaigns-api-openapi.yml
+- aid: nexthink:nexthink-device-deletions-api
+  name: Nexthink device-deletions API
+  description: The device-deletions API from Nexthink — 1 operation(s) for device-deletions.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - device-deletions
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-device-deletions-api-openapi.yml
+- aid: nexthink:nexthink-enrichment-api
+  name: Nexthink enrichment API
+  description: The enrichment API from Nexthink — 1 operation(s) for enrichment.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - enrichment
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-enrichment-api-openapi.yml
+- aid: nexthink:nexthink-execute-api
+  name: Nexthink Execute API
+  description: The Execute API from Nexthink — 2 operation(s) for execute.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - Execute
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-execute-api-openapi.yml
+- aid: nexthink:nexthink-export-api
+  name: Nexthink Export API
+  description: The Export API from Nexthink — 2 operation(s) for export.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - Export
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-export-api-openapi.yml
+- aid: nexthink:nexthink-handoff-api-api
+  name: Nexthink Handoff API API
+  description: The Handoff API API from Nexthink — 1 operation(s) for handoff api.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - Handoff API
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-handoff-api-api-openapi.yml
+- aid: nexthink:nexthink-remote-actions-api
+  name: Nexthink Remote actions API
+  description: The Remote actions API from Nexthink — 3 operation(s) for remote actions.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - Remote actions
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-remote-actions-api-openapi.yml
+- aid: nexthink:nexthink-workflows-api
+  name: Nexthink Workflows API
+  description: The Workflows API from Nexthink — 5 operation(s) for workflows.
+  humanURL: https://docs.nexthink.com/api/nql
+  baseURL: https://instance.api.us.nexthink.cloud
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/nexthink-workflows-api-openapi.yml
 common:
+- type: DeveloperPortal
+  url: https://docs.nexthink.com/api
+- type: Documentation
+  url: https://docs.nexthink.com/api
+- type: APIReference
+  url: https://docs.nexthink.com/api
+- type: GettingStarted
+  url: https://docs.nexthink.com/api/api-credentials
+- type: Authentication
+  url: authentication/nexthink-authentication.yml
+- type: OAuthScopes
+  url: scopes/nexthink-scopes.yml
+- type: Conventions
+  url: conventions/nexthink-conventions.yml
+- type: ErrorCatalog
+  url: errors/nexthink-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/nexthink-lifecycle.yml
+- type: ChangeLog
+  url: changelog/nexthink-changelog.yml
+- type: ChangeLog
+  url: https://docs.nexthink.com/platform/whats-new
+- type: DataModel
+  url: data-model/nexthink-data-model.yml
+- type: Conformance
+  url: conformance/nexthink-conformance.yml
+- type: Compliance
+  url: https://www.nexthink.com/trust-center
+- type: TrustCenter
+  url: https://www.nexthink.com/trust-center
+- type: MCPServer
+  url: mcp/nexthink-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/nexthink-agentic-access.yml
+- type: LLMsTxt
+  url: llms/nexthink-llms.txt
+- type: WellKnown
+  url: well-known/nexthink-well-known.yml
+- type: SecurityTxt
+  url: well-known/nexthink-security.txt
+- type: Security
+  url: https://www.nexthink.com/responsible-disclosure-policy/
+- type: VulnerabilityDisclosure
+  url: security/nexthink-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/nexthink-domain-security.yml
+- type: Blog
+  url: https://www.nexthink.com/blog
+- type: Support
+  url: https://community.nexthink.com
+- type: GitHubOrganization
+  url: https://github.com/Nexthink
+- type: PrivacyPolicy
+  url: https://www.nexthink.com/privacy-policy
+- type: TermsOfService
+  url: https://docs.nexthink.com/legal/services-terms
 - type: Website
-  url: http://nexthink.com
+  url: https://www.nexthink.com
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 35
+  pass: local-v1

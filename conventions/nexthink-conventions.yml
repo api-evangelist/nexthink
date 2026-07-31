@@ -1,0 +1,73 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nexthink.com/api
+summary: >-
+  Cross-cutting request/response semantics for the Nexthink Infinity public APIs
+  (Remote Actions, Enrichment, Data Management, Workflows, Campaigns, NQL, Spark).
+authentication:
+  style: oauth2-client-credentials
+  token_endpoint: https://{instance}-login.{region}.nexthink.cloud/oauth2/default/v1/token
+  token_request_auth: HTTP Basic (base64 of clientId:clientSecret) on the token endpoint
+  api_call_auth: Bearer JWT in the Authorization header
+  token_lifetime_seconds: 900
+  scope: 'service:integration'
+  ref: authentication/nexthink-authentication.yml
+base_url:
+  pattern: https://{instance}.api.{region}.nexthink.cloud
+  regions: [us, eu, pac, meta]
+  note: >-
+    The instance name and region are specific to each customer tenant. The login
+    host (token endpoint) uses {instance}-login.{region}.nexthink.cloud; the API
+    host uses {instance}.api.{region}.nexthink.cloud.
+versioning:
+  style: uri-path
+  observed: [v1, v2]
+  note: >-
+    API operations are versioned in the path (e.g. /api/v1/nql/execute and
+    /api/v2/nql/execute). The Infinity platform itself uses a separate year.month
+    release train (see changelog/nexthink-changelog.yml).
+  ref: lifecycle/nexthink-lifecycle.yml
+content_negotiation:
+  request: application/json
+  response: application/json (default); text/csv supported on NQL execute via the Accept header
+  headers:
+  - name: Accept
+    values: [application/json, text/csv]
+    note: 406 Not Acceptable returned for unsupported Accept values (NQL API)
+  - name: x-utc-times
+    values: ['true']
+    note: Set to true for UTC timestamps on NQL responses; otherwise regional timezone
+idempotency:
+  supported: false
+  note: >-
+    No idempotency-key header or idempotent-retry contract is documented for the
+    Nexthink public APIs. Write operations (remote-action / workflow triggers,
+    enrichment, device deletions) are not documented as idempotent; do not retry
+    blindly.
+pagination:
+  style: none-documented
+  note: >-
+    The public APIs do not expose a generic cursor/offset pagination contract.
+    Large NQL result sets are handled by the asynchronous export flow instead of
+    paged reads.
+async_pattern:
+  name: NQL export
+  description: >-
+    Large datasets are exported asynchronously to Amazon S3. POST /api/v1/nql/export
+    starts an export and returns an exportId; GET /api/v1/nql/status/{exportId}
+    polls the export status until a signed S3 download URL is available.
+  operations: [export-post, export-get, status]
+  ref: openapi/nexthink-nql-api-openapi.json
+error_envelope:
+  shape: >-
+    JSON body with a machine code and human message. Two variants are used across
+    the APIs: {message, code, source} (NQL) and {code, message} (Remote Actions,
+    Workflows).
+  media_type: application/json
+  rfc9457: false
+  ref: errors/nexthink-problem-types.yml
+rate_limiting:
+  documented: false
+  note: No published rate-limit headers or quotas were found in the API documentation.
+tracing:
+  request_id_header: none-documented

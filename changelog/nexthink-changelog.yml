@@ -1,0 +1,25 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nexthink.com/platform/whats-new
+scheme: year.month
+current: '2026.6'
+url: https://docs.nexthink.com/platform/whats-new
+note: >-
+  Nexthink publishes a dated "What's new" release-notes page for the Infinity
+  platform using a year.month release train (multiple releases per year, archive
+  back to 2022). Public-API operation versioning (v1/v2) is tracked separately in
+  the API path. Only the recent release-window headers are captured here; the
+  live page is the source of truth for per-release detail.
+entries:
+- version: '2026.6'
+  highlights: [Latest Infinity platform release]
+- version: '2026.5'
+  highlights: []
+- version: '2026.4'
+  highlights: []
+- version: '2026.3'
+  highlights: []
+- version: '2026.2'
+  highlights: []
+- version: '2026.1'
+  highlights: []

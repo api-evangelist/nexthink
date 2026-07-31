@@ -1,0 +1,5 @@
+Contact: responsible-disclosure@nexthink.com
+Encryption: https://www.nexthink.com/security-team.pub
+Preferred-Languages: en, fr, es
+Policy: https://www.nexthink.com/responsible-disclosure-policy/
+Hiring: https://www.nexthink.com/company/careers/

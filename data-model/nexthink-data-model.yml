@@ -1,0 +1,51 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/ (schemas + id-reference fields across the 7 Nexthink specs)
+note: >-
+  The Nexthink public APIs are action/query oriented rather than a CRUD resource
+  graph, so relationships below are the id-references observed in request/response
+  schemas, not a normalized ERD.
+entities:
+- name: Device
+  key: Nexthink Collector ID (device UID)
+  described_in: [openapi/nexthink-remote-actions-api-openapi.json, openapi/nexthink-data-management-api-openapi.json]
+  note: Targets of remote actions and device-deletion requests.
+- name: RemoteAction
+  key: id / uuid (nql-id)
+  described_in: [openapi/nexthink-remote-actions-api-openapi.json]
+  fields: [id, uuid, name, purpose, targeting, scriptInfo]
+- name: RemoteActionExecution
+  key: requestId
+  described_in: [openapi/nexthink-remote-actions-api-openapi.json]
+- name: Workflow
+  key: workflowUuid
+  described_in: [openapi/nexthink-workflows-openapi.json]
+- name: WorkflowExecution
+  key: executionUuid
+  described_in: [openapi/nexthink-workflows-openapi.json]
+- name: Campaign
+  described_in: [openapi/nexthink-campaigns-api-openapi.json]
+- name: NqlQuery
+  key: 'queryId (pattern #[a-z0-9_]{2,255})'
+  described_in: [openapi/nexthink-nql-api-openapi.json]
+- name: NqlExport
+  key: exportId
+  described_in: [openapi/nexthink-nql-api-openapi.json]
+relationships:
+- from: RemoteAction
+  to: Device
+  type: has_many
+  via: devices
+  note: A remote action is executed against a list of Collector device IDs.
+- from: RemoteActionExecution
+  to: RemoteAction
+  type: belongs_to
+  via: remoteActionId
+- from: NqlExport
+  to: NqlQuery
+  type: belongs_to
+  via: queryId
+- from: WorkflowExecution
+  to: Workflow
+  type: belongs_to
+  via: workflowUuid

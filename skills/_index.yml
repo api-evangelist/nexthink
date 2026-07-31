@@ -1,0 +1,20 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/ (operationIds verified against the assembled Nexthink specs)
+skills:
+- file: nexthink-run-nql-query.md
+  name: Run a Nexthink NQL query
+  api: openapi/nexthink-nql-api-openapi.json
+  operations: [execute, export-post, status]
+- file: nexthink-trigger-remote-action.md
+  name: Trigger a Nexthink remote action
+  api: openapi/nexthink-remote-actions-api-openapi.json
+  operations: [getAllRemoteActions, getRemoteActionByNqlId, executeRA]
+- file: nexthink-trigger-workflow.md
+  name: Trigger a Nexthink workflow
+  api: openapi/nexthink-workflows-openapi.json
+  operations: [getAllWorkflows, getWorkflow, executeEA, executeEAWithExternalIds]
+- file: nexthink-enrich-inventory.md
+  name: Enrich Nexthink inventory objects
+  api: openapi/nexthink-enrichment-api-openapi.json
+  operations: [enrichmentDataFields]

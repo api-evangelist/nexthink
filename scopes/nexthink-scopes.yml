@@ -1,0 +1,26 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/nexthink-workflows-openapi.json
+docs: https://docs.nexthink.com/api/getting-authentication-token
+schemes:
+- name: publicApiAuth
+  type: oauth2
+  source: openapi/nexthink-workflows-openapi.json
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{instance}-login.{region}.nexthink.cloud/oauth2/default/v1/token
+scopes:
+- scope: 'service:integration'
+  description: >-
+    Grant used for the OAuth 2.0 client-credentials token request that authorizes
+    an external integration to call the Nexthink public APIs. Passed as the
+    `scope` form field on the token endpoint. Feature-level access (Remote
+    Actions, Enrichment, Data Management, Workflows, Campaigns, NQL, Spark) is
+    controlled by the permissions selected when the OAuth client credential is
+    created in the Nexthink web interface, not by additional OAuth scopes.
+  flows: [clientCredentials]
+  sources: [docs.nexthink.com/api/getting-authentication-token]
+notes: >-
+  Nexthink issues a single documented OAuth scope (service:integration). Fine-grained
+  authorization is enforced through per-credential API permissions (checkboxes in
+  Administration > API credentials), so the scope surface is intentionally flat.

@@ -1,0 +1,52 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/ (Nexthink Infinity public API operations)
+note: >-
+  No official hosted/remote Nexthink MCP server was found in the docs, npm
+  (@modelcontextprotocol), or MCP registries as of 2026-07. This is a CANDIDATE
+  tool surface derived one-to-one from the published OpenAPI operations to show
+  what a Nexthink MCP server could expose. Not an official Nexthink artifact.
+server:
+  name: nexthink
+  transport: http
+tools:
+- name: execute_nql
+  description: Execute a saved NQL query and return rows as JSON or CSV.
+  source_operation: openapi/nexthink-nql-api-openapi.json#execute
+- name: export_nql
+  description: Start an asynchronous export of a large NQL result set to S3.
+  source_operation: openapi/nexthink-nql-api-openapi.json#export-post
+- name: get_nql_export_status
+  description: Poll the status of an NQL export and retrieve the download URL.
+  source_operation: openapi/nexthink-nql-api-openapi.json#status
+- name: trigger_remote_action
+  description: Trigger a remote action across a set of devices.
+  source_operation: openapi/nexthink-remote-actions-api-openapi.json#executeRA
+- name: list_remote_actions
+  description: List remote actions and their configuration.
+  source_operation: openapi/nexthink-remote-actions-api-openapi.json#getAllRemoteActions
+- name: get_remote_action
+  description: Retrieve the configuration of a remote action by NQL id.
+  source_operation: openapi/nexthink-remote-actions-api-openapi.json#getRemoteActionByNqlId
+- name: trigger_workflow
+  description: Trigger a workflow execution.
+  source_operation: openapi/nexthink-workflows-openapi.json#executeEA
+- name: list_workflows
+  description: List workflows.
+  source_operation: openapi/nexthink-workflows-openapi.json#getAllWorkflows
+- name: get_workflow
+  description: Retrieve a workflow definition.
+  source_operation: openapi/nexthink-workflows-openapi.json#getWorkflow
+- name: enrich_fields
+  description: Enrich object fields in the Nexthink inventory.
+  source_operation: openapi/nexthink-enrichment-api-openapi.json#enrichmentDataFields
+- name: trigger_campaign
+  description: Send a campaign to a set of users.
+  source_operation: openapi/nexthink-campaigns-api-openapi.json#triggerCampaign
+- name: schedule_device_deletions
+  description: Schedule batch deletion of devices from the inventory.
+  source_operation: openapi/nexthink-data-management-api-openapi.json#deleteDevices
+- name: spark_handoff
+  description: Transfer a live conversation to Spark.
+  source_operation: openapi/nexthink-spark-api-openapi.json#handleHandoffRequest

@@ -1,0 +1,41 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nexthink.com/api, https://www.nexthink.com/trust-center
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Token endpoint issues OAuth 2.0 client-credentials access tokens
+    (grant_type=client_credentials) with scope service:integration.
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: openapi securityScheme publicApiAuth flow clientCredentials
+- id: bearer-jwt
+  conforms: true
+  evidence: securityScheme bearerAuth type http scheme bearer bearerFormat JWT
+- id: oidc
+  conforms: false
+  evidence: No OpenID Connect discovery document (/.well-known/openid-configuration returned 404).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a custom JSON envelope ({code, message[, source]}) with
+    application/json, not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: https://nexthink.com/.well-known/security.txt present with Contact and Policy.
+- id: gdpr
+  conforms: true
+  evidence: Compliance with GDPR stated on the Nexthink Trust Center.
+- id: ccpa
+  conforms: true
+  evidence: Compliance with CCPA stated on the Nexthink Trust Center.
+- id: eu-ai-act
+  conforms: true
+  evidence: Compliance with the EU AI Act stated on the Nexthink Trust Center.
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: fapi
+  conforms: false

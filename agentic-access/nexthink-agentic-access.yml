@@ -1,0 +1,254 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/nexthink-campaigns-api-openapi.json, openapi/nexthink-data-management-api-openapi.json,
+  openapi/nexthink-enrichment-api-openapi.json, openapi/nexthink-nql-api-openapi.json, openapi/nexthink-remote-actions-api-openapi.json,
+  openapi/nexthink-spark-api-openapi.json, openapi/nexthink-workflows-openapi.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 17
+  by_action_class:
+    acting: 11
+    connected: 6
+  by_consequence:
+    write: 11
+    read: 6
+  human_in_the_loop_required: 0
+operations:
+- path: /api/v1/euf/campaign/trigger
+  method: post
+  operationId: triggerCampaign
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/data-management/device/deletions
+  method: post
+  operationId: deleteDevices
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/enrichment/data/fields
+  method: post
+  operationId: enrichmentDataFields
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/nql/execute
+  method: post
+  operationId: execute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/nql/execute
+  method: post
+  operationId: execute
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/nql/export
+  method: get
+  operationId: export-get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/nql/export
+  method: post
+  operationId: export-post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/nql/status/{exportId}
+  method: get
+  operationId: status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/act/execute
+  method: post
+  operationId: executeRA
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/act/remote-action
+  method: get
+  operationId: getAllRemoteActions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/act/remote-action/details
+  method: get
+  operationId: getRemoteActionByNqlId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/spark/handoff
+  method: post
+  operationId: handleHandoffRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/workflows/execute
+  method: post
+  operationId: executeEA
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/workflows/execute
+  method: post
+  operationId: executeEAWithExternalIds
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/workflows/workflows/{workflowUuid}/execution/{executionUuid}/trigger
+  method: post
+  operationId: triggerThinklet
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/workflows
+  method: get
+  operationId: getAllWorkflows
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/workflows/details
+  method: get
+  operationId: getWorkflow
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

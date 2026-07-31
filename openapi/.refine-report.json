@@ -1,0 +1,28 @@
+{
+  "provider": "nexthink",
+  "sources": [
+    "nexthink-campaigns-api-openapi.yml",
+    "nexthink-device-deletions-api-openapi.yml",
+    "nexthink-enrichment-api-openapi.yml",
+    "nexthink-execute-api-openapi.yml",
+    "nexthink-export-api-openapi.yml",
+    "nexthink-handoff-api-api-openapi.yml",
+    "nexthink-remote-actions-api-openapi.yml",
+    "nexthink-workflows-api-openapi.yml"
+  ],
+  "outputs": [
+    "nexthink-campaigns-api-openapi.yml",
+    "nexthink-device-deletions-api-openapi.yml",
+    "nexthink-enrichment-api-openapi.yml",
+    "nexthink-execute-api-openapi.yml",
+    "nexthink-export-api-openapi.yml",
+    "nexthink-handoff-api-api-openapi.yml",
+    "nexthink-remote-actions-api-openapi.yml",
+    "nexthink-workflows-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

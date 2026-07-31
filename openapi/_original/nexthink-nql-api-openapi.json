@@ -1,0 +1,724 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NQL API",
+    "version": "1.2.0"
+  },
+  "servers": [
+    {
+      "url": "https://{instance}.api.{region}.nexthink.cloud",
+      "description": "Nexthink Infinity instance API host",
+      "variables": {
+        "instance": {
+          "default": "instance",
+          "description": "Your Nexthink instance name"
+        },
+        "region": {
+          "default": "us",
+          "enum": [
+            "us",
+            "eu",
+            "pac",
+            "meta"
+          ],
+          "description": "Nexthink cloud region"
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "Execute"
+    },
+    {
+      "name": "Export"
+    }
+  ],
+  "paths": {
+    "/api/v1/nql/execute": {
+      "post": {
+        "tags": [
+          "Execute"
+        ],
+        "summary": "Execute an NQL V1",
+        "description": "Executes an NQL query and returns the results.",
+        "operationId": "execute",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          },
+          {
+            "name": "Accept",
+            "description": "Set the header to `application/json` for a JSON response or `text/csv` for a CSV response. If no value is set, `application/json` applied by default. Otherwise, 406 error (not acceptable) is returned.",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "x-utc-times",
+            "description": "Set the header to `true` for UTC timezone. With any other value, regional timezone is applied by default.",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The configuration of the execution.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NqlApiExecuteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Successful execution.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NqlApiExecuteResponse"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - No valid authentication credentials."
+          },
+          "403": {
+            "description": "No permission - Not authorized to execute queries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found - No query associated with that ID."
+          },
+          "406": {
+            "description": "Not Acceptable. The Accept header should be \"application/json\", \"text/csv\" or empty."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        }
+      }
+    },
+    "/api/v2/nql/execute": {
+      "post": {
+        "tags": [
+          "Execute"
+        ],
+        "summary": "Execute an NQL V2",
+        "description": "Executes an NQL query and returns the results.",
+        "operationId": "execute",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          },
+          {
+            "name": "Accept",
+            "description": "Set the header to `application/json` for a response or `text/csv` for a CSV response. If no value is set, `application/json` is applied by default. Otherwise, 406 error (not acceptable) is returned.",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "x-utc-times",
+            "description": "Set the header to `true` for UTC timezone. With any other value, regional timezone is applied by default.",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The configuration of the execution.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NqlApiExecuteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Successful execution.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NqlApiExecuteV2Response"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - No valid authentication credentials."
+          },
+          "403": {
+            "description": "No permission - Not authorized to execute queries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found - No query associated with that ID"
+          },
+          "406": {
+            "description": "Not Acceptable - The accept header should be \"application/json\", \"text/csv\" or empty"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/nql/export": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Export an NQL",
+        "description": "Starts the execution of a query that will finish with the export of the results to a file in S3. The service response contains an identifier that can be used in the \"status\" operation to obtain the URL of the file with the results.",
+        "operationId": "export-get",
+        "parameters": [
+          {
+            "name": "queryId",
+            "in": "query",
+            "description": "Identifier of the query which is going to be executed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\\\"alert_name\\\": \\\"my_alert\\\", \\\"alert_status\\\": \\\"Open\\\"}\"",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "compression",
+            "in": "query",
+            "description": "The compression algorithm for the export. If not set, no compression is applied. Allowed values: `NONE`, `ZSTD`, `GZIP`.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Successful execution.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NqlApiExportResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - No valid authentication credentials."
+          },
+          "403": {
+            "description": "No permission - Not authorized to execute queries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found - No query associated with that ID."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Export an NQL",
+        "description": "Starts the execution of a query that will finish with the export of the results to a file in S3. The service response contains an identifier that can be used in the \"status\" operation to obtain the URL of the file with the results.",
+        "operationId": "export-post",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The configuration of the execution",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NqlApiExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Successful execution.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NqlApiExportResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - No valid authentication credentials."
+          },
+          "403": {
+            "description": "No permission - Not authorized to execute queries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found - No query associated with that ID."
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        }
+      }
+    },
+    "/api/v1/nql/status/{exportId}": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Status of an export",
+        "description": "Retrieve the status of an export given its identifier.",
+        "operationId": "status",
+        "parameters": [
+          {
+            "name": "exportId",
+            "in": "path",
+            "description": "Export identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Successful execution.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NqlApiStatusResponse"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "206": {
+            "description": "Partial Content - The query results were truncated because the maximum number of results allowed by the license was reached",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NqlApiStatusResponse"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "Unauthorized - No valid authentication credentials."
+          },
+          "403": {
+            "description": "No permission - Not authorized to execute queries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found - No export associated with that ID."
+          },
+          "429": {
+            "description": "Too many requests - The user has reached the daily request limit.",
+            "headers": {
+              "retry-after": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "The date and time the client should wait before retrying the request."
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "NqlApiExecuteRequest": {
+        "required": [
+          "queryId"
+        ],
+        "type": "object",
+        "properties": {
+          "queryId": {
+            "maxLength": 255,
+            "minLength": 1,
+            "pattern": "^#[a-z0-9_]{2,255}$",
+            "type": "string",
+            "description": "Identifier of the query which is going to be executed."
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\\\"alert_name\\\": \\\"my_alert\\\", \\\"alert_status\\\": \\\"Open\\\"}\""
+          }
+        }
+      },
+      "NqlApiExecuteResponse": {
+        "type": "object",
+        "properties": {
+          "queryId": {
+            "type": "string",
+            "description": "Identifier of the executed query"
+          },
+          "executedQuery": {
+            "type": "string",
+            "description": "Final query executed with the replaced parameters."
+          },
+          "rows": {
+            "type": "integer",
+            "description": "Number of rows returned",
+            "format": "int64"
+          },
+          "executionDateTime": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DateTime"
+              },
+              {
+                "type": "object",
+                "description": "Date and time of the execution"
+              }
+            ]
+          },
+          "headers": {
+            "type": "array",
+            "description": "Ordered list with the headers of the returned fields.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "data": {
+            "type": "array",
+            "description": "List of rows with the data returned by the query execution.",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "DateTime": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "hour": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "minute": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "second": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Message with the description of the error."
+          },
+          "code": {
+            "type": "integer",
+            "description": "Error code",
+            "format": "int32"
+          },
+          "source": {
+            "type": "string",
+            "description": "Source of the error, if any."
+          }
+        }
+      },
+      "NqlApiExecuteV2Response": {
+        "type": "object",
+        "properties": {
+          "queryId": {
+            "type": "string",
+            "description": "Identifier of the executed query"
+          },
+          "executedQuery": {
+            "type": "string",
+            "description": "Final query executed with the parameters replaced"
+          },
+          "rows": {
+            "type": "integer",
+            "description": "Number of rows returned",
+            "format": "int64"
+          },
+          "executionDateTime": {
+            "type": "string",
+            "description": "Date and time of the execution in ISO format"
+          },
+          "data": {
+            "type": "array",
+            "description": "List of rows with the data returned by the query execution",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key1": {},
+                "key2": {}
+              }
+            }
+          }
+        }
+      },
+      "NqlApiExportResponse": {
+        "type": "object",
+        "properties": {
+          "exportId": {
+            "type": "string",
+            "description": "Export identifier to be used in the \"status\" operation to know the state of the export and to retrieve the URL of the file with the results."
+          }
+        }
+      },
+      "NqlApiExportRequest": {
+        "required": [
+          "queryId"
+        ],
+        "type": "object",
+        "properties": {
+          "queryId": {
+            "maxLength": 255,
+            "minLength": 1,
+            "pattern": "^#[a-z0-9_]{2,255}$",
+            "type": "string",
+            "description": "Identifier of the query which is going to be executed."
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\\\"alert_name\\\": \\\"my_alert\\\", \\\"alert_status\\\": \\\"Open\\\"}\""
+          },
+          "compression": {
+            "type": "string",
+            "description": "The compression algorithm for the export. If not set, no compression is applied.",
+            "enum": [
+              "ZSTD",
+              "GZIP",
+              "NONE"
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "NqlApiStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the export",
+            "enum": [
+              "SUBMITTED",
+              "IN_PROGRESS",
+              "ERROR",
+              "COMPLETED"
+            ],
+            "nullable": false
+          },
+          "resultsFileUrl": {
+            "type": "string",
+            "description": "URL of the file with the content once the export has been completed.",
+            "nullable": true
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "Message with the description of the error.",
+            "nullable": true
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "x-apievangelist-source": "https://docs.nexthink.com/api/llms.txt",
+  "x-apievangelist-method": "searched",
+  "x-apievangelist-generated": "2026-07-20"
+}

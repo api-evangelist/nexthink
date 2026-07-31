@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Nexthink Data Management API
+  version: 1.0.0
+extends: openapi/nexthink-data-management-api-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-20'
+    x-apievangelist-source: https://docs.nexthink.com/api
+    x-apievangelist-region-hosts: 'https://{instance}.api.{region}.nexthink.cloud (region: us|eu|pac|meta)'
+    x-apievangelist-auth: OAuth2 client-credentials; bearer JWT; token TTL 900s; scope service:integration
+- target: $
+  update:
+    x-apievangelist-artifacts:
+      authentication: authentication/nexthink-authentication.yml
+      conventions: conventions/nexthink-conventions.yml
+      errors: errors/nexthink-problem-types.yml
+      lifecycle: lifecycle/nexthink-lifecycle.yml

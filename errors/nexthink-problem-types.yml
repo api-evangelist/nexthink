@@ -1,0 +1,61 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/ (4xx/5xx responses across all 7 Nexthink specs)
+format: custom-json
+envelope:
+  media_type: application/json
+  rfc9457: false
+  variants:
+  - schema: ErrorResponse
+    fields: [message, code, source]
+    used_by: [NQL API]
+  - schema: ErrorResponse
+    fields: [code, message]
+    used_by: [Remote Actions API, Workflows]
+problems:
+- status: 400
+  title: Bad request
+  description: Invalid request; see the error code for details.
+  source_operations:
+  - openapi/nexthink-remote-actions-api-openapi.json#executeRA
+  - openapi/nexthink-workflows-openapi.json#executeEA
+  - openapi/nexthink-enrichment-api-openapi.json#enrichmentDataFields
+  - openapi/nexthink-data-management-api-openapi.json#deleteDevices
+- status: 401
+  title: Unauthorized
+  description: No valid authentication credentials (missing/expired bearer token).
+  source_operations:
+  - openapi/nexthink-nql-api-openapi.json#execute
+  - openapi/nexthink-remote-actions-api-openapi.json#executeRA
+  - openapi/nexthink-workflows-openapi.json#executeEA
+- status: 403
+  title: No permission
+  description: >-
+    Authenticated but the credential lacks the required feature permission for the
+    requested operation.
+  source_operations:
+  - openapi/nexthink-nql-api-openapi.json#execute
+  - openapi/nexthink-remote-actions-api-openapi.json#getAllRemoteActions
+  - openapi/nexthink-workflows-openapi.json#getAllWorkflows
+- status: 404
+  title: Not found
+  description: >-
+    No resource associated with the supplied identifier (e.g. unknown NQL query id,
+    remote-action NQL id, or workflow).
+  source_operations:
+  - openapi/nexthink-nql-api-openapi.json#execute
+  - openapi/nexthink-remote-actions-api-openapi.json#getRemoteActionByNqlId
+  - openapi/nexthink-workflows-openapi.json#getWorkflow
+- status: 406
+  title: Not Acceptable
+  description: The Accept header must be application/json, text/csv, or empty.
+  source_operations:
+  - openapi/nexthink-nql-api-openapi.json#execute
+- status: 500
+  title: Internal server error
+  source_operations:
+  - openapi/nexthink-nql-api-openapi.json#execute
+- status: 503
+  title: Service unavailable
+  source_operations:
+  - openapi/nexthink-nql-api-openapi.json#execute

@@ -1,0 +1,38 @@
+generated: '2026-07-20'
+method: searched
+docs: https://docs.nexthink.com/api/api-credentials
+token_endpoint: https://{instance}-login.{region}.nexthink.cloud/oauth2/default/v1/token
+token_request_auth: HTTP Basic (base64 clientId:clientSecret) on the token endpoint
+grant_type: client_credentials
+scope: 'service:integration'
+token_lifetime_seconds: 900
+source: openapi/nexthink-campaigns-api-openapi.json, openapi/nexthink-data-management-api-openapi.json,
+  openapi/nexthink-enrichment-api-openapi.json, openapi/nexthink-nql-api-openapi.json, openapi/nexthink-remote-actions-api-openapi.json,
+  openapi/nexthink-spark-api-openapi.json, openapi/nexthink-workflows-openapi.json
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/nexthink-campaigns-api-openapi.json
+  - openapi/nexthink-data-management-api-openapi.json
+  - openapi/nexthink-enrichment-api-openapi.json
+  - openapi/nexthink-nql-api-openapi.json
+  - openapi/nexthink-remote-actions-api-openapi.json
+  - openapi/nexthink-spark-api-openapi.json
+  - openapi/nexthink-workflows-openapi.json
+- name: publicApiAuth
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://instance-login.region.nexthink.cloud/oauth2/default/v1/token
+    scopes: 0
+  sources:
+  - openapi/nexthink-workflows-openapi.json

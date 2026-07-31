@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nexthink.com/platform/whats-new
+versioning:
+  api:
+    scheme: uri-path
+    observed: [v1, v2]
+    note: >-
+      Public API operations are versioned in the request path (e.g.
+      /api/v1/nql/execute vs /api/v2/nql/execute, /api/v1/workflows/execute vs
+      /api/v2/workflows/execute).
+  platform:
+    scheme: year.month
+    current: '2026.6'
+    docs: https://docs.nexthink.com/platform/whats-new
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal deprecation policy or RFC 8594 Sunset/Deprecation header support was
+    found in the API documentation. Older API versions (v1) remain published
+    alongside v2.
+sla:
+  url: null
+  note: SLA/uptime commitments are contractual (enterprise) and not publicly published.
+status_page: null
+status_page_note: >-
+  No public status/uptime page was found (status.nexthink.com did not resolve).
+changelog: https://docs.nexthink.com/platform/whats-new
+deprecated_operations: []

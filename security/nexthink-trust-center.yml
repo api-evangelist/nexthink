@@ -1,0 +1,25 @@
+generated: '2026-07-20'
+method: searched
+probe: false
+url: https://www.nexthink.com/trust-center
+resources:
+  security_hub: https://docs.nexthink.com/security
+  privacy_hub: https://docs.nexthink.com/legal/global-privacy-hub
+  ai_hub: https://docs.nexthink.com/legal/global-ai-hub
+  service_terms: https://docs.nexthink.com/legal/services-terms
+compliance:
+- GDPR
+- CCPA
+- EU AI Act
+certifications_indicated:
+- 'SOC 2 (AICPA seal displayed on the Trust Center)'
+note: >-
+  The Nexthink Trust Center publicly names regulatory compliance (GDPR, CCPA, EU
+  AI Act) and displays certification seals including AICPA (SOC 2) plus additional
+  badges. Detailed certification attestations (e.g. SOC 2 Type II report, ISO
+  27001) live behind the access-gated Security Hub, so only the textually/visually
+  confirmed items are recorded here; nothing is asserted beyond what the public
+  Trust Center shows.
+evidence:
+- source: https://www.nexthink.com/trust-center
+  keywords: [trust center, gdpr, ccpa, eu ai act, aicpa/soc seal]
