@@ -128,6 +128,8 @@ apis:
   - type: OpenAPI
     url: openapi/nexthink-workflows-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/nexthink-campaigns-api-overlay.yaml
 - type: DeveloperPortal
   url: https://docs.nexthink.com/api
 - type: Documentation
