@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaigns Export API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export an NQL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/nql/export",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "queryId",
+                "value": "",
+                "type": "query",
+                "description": "Identifier of the query which is going to be executed."
+              },
+              {
+                "name": "parameters",
+                "value": "",
+                "type": "query",
+                "description": "Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\\\"alert_name\\\": \\\"my_alert\\\", \\\"alert_status\\\": \\\"Open\\\"}\""
+              },
+              {
+                "name": "compression",
+                "value": "",
+                "type": "query",
+                "description": "The compression algorithm for the export. If not set, no compression is applied. Allowed values: `NONE`, `ZSTD`, `GZIP`."
+              }
+            ]
+          },
+          "docs": "Starts the execution of a query that will finish with the export of the results to a file in S3. The service response contains an identifier that can be used in the \"status\" operation to obtain the URL of the file with the results."
+        },
+        {
+          "info": {
+            "name": "Export an NQL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/nql/export",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts the execution of a query that will finish with the export of the results to a file in S3. The service response contains an identifier that can be used in the \"status\" operation to obtain the URL of the file with the results."
+        },
+        {
+          "info": {
+            "name": "Status of an export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/nql/status/:exportId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the status of an export given its identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

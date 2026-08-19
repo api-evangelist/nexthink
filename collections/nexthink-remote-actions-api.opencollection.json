@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaigns Remote actions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Remote actions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Trigger a remote action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/act/execute",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Triggers the execution of a remote action for a set of devices."
+        },
+        {
+          "info": {
+            "name": "List remote actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/act/remote-action",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves the remote actions, including their configuration information."
+        },
+        {
+          "info": {
+            "name": "Get remote action details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/act/remote-action/details",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "nql-id",
+                "value": "",
+                "type": "query",
+                "description": "The nql-id of the remote action"
+              }
+            ]
+          },
+          "docs": "Retrieve the configuration of a specific remote action."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

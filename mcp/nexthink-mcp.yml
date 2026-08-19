@@ -2,11 +2,9 @@ generated: '2026-07-20'
 method: derived
 status: candidate
 source: openapi/ (Nexthink Infinity public API operations)
-note: >-
-  No official hosted/remote Nexthink MCP server was found in the docs, npm
-  (@modelcontextprotocol), or MCP registries as of 2026-07. This is a CANDIDATE
-  tool surface derived one-to-one from the published OpenAPI operations to show
-  what a Nexthink MCP server could expose. Not an official Nexthink artifact.
+note: No official hosted/remote Nexthink MCP server was found in the docs, npm (@modelcontextprotocol),
+  or MCP registries as of 2026-07. This is a CANDIDATE tool surface derived one-to-one from the published
+  OpenAPI operations to show what a Nexthink MCP server could expose. Not an official Nexthink artifact.
 server:
   name: nexthink
   transport: http
@@ -50,3 +48,9 @@ tools:
 - name: spark_handoff
   description: Transfer a live conversation to Spark.
   source_operation: openapi/nexthink-spark-api-openapi.json#handleHandoffRequest
+deployment:
+  mode: none
+  verified: derived
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census

@@ -1,0 +1,1053 @@
+{
+  "item": [
+    {
+      "id": "224d35b6-cecb-4673-ac80-6844906f8ade",
+      "name": "Remote actions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "deef04d8-2ace-4528-bca6-0be47fb61905",
+          "name": "Trigger a remote action",
+          "request": {
+            "name": "Trigger a remote action",
+            "description": {
+              "content": "Triggers the execution of a remote action for a set of devices.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "act",
+                "execute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Nexthink instance name",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                },
+                {
+                  "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"devices\": [\n    \"<string>\"\n  ],\n  \"remoteActionId\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"<string>\"\n  },\n  \"expiresInMinutes\": \"<integer>\",\n  \"triggerInfo\": {\n    \"externalSource\": \"<string>\",\n    \"reason\": \"<string>\",\n    \"externalReference\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "27c598d3-fa58-44e6-a529-3b035206059b",
+              "name": "OK - Successful execution.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices\": [\n    \"<string>\"\n  ],\n  \"remoteActionId\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"expiresInMinutes\": \"<integer>\",\n  \"triggerInfo\": {\n    \"externalSource\": \"<string>\",\n    \"reason\": \"<string>\",\n    \"externalReference\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"expiresInMinutes\": 1128\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e35ab32-8fce-4580-b794-1f5bdd54a4ee",
+              "name": "Bad request - Invalid request, see the error code for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices\": [\n    \"<string>\"\n  ],\n  \"remoteActionId\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"expiresInMinutes\": \"<integer>\",\n  \"triggerInfo\": {\n    \"externalSource\": \"<string>\",\n    \"reason\": \"<string>\",\n    \"externalReference\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "364e20ac-9905-4eca-b0f8-5a83f1a73548",
+              "name": "Unauthorized - No valid authentication credentials.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "string",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices\": [\n    \"<string>\"\n  ],\n  \"remoteActionId\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"expiresInMinutes\": \"<integer>\",\n  \"triggerInfo\": {\n    \"externalSource\": \"<string>\",\n    \"reason\": \"<string>\",\n    \"externalReference\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7f270425-901b-43b6-9f60-ab7f41e3cfbe",
+              "name": "No permission - Not authorized to execute the remote action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices\": [\n    \"<string>\"\n  ],\n  \"remoteActionId\": \"<string>\",\n  \"params\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"expiresInMinutes\": \"<integer>\",\n  \"triggerInfo\": {\n    \"externalSource\": \"<string>\",\n    \"reason\": \"<string>\",\n    \"externalReference\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4893e624-bc3a-4f39-a453-29e97cedc429",
+          "name": "List remote actions",
+          "request": {
+            "name": "List remote actions",
+            "description": {
+              "content": "Retrieves the remote actions, including their configuration information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "act",
+                "remote-action"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Nexthink instance name",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                },
+                {
+                  "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75872d4b-17b0-4796-be61-f2e53269d752",
+              "name": "OK - Successful listing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"builtInContentVersion\": \"string\",\n    \"description\": \"string\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"origin\": \"string\",\n    \"purpose\": [\n      \"DATA_COLLECTION\",\n      \"DATA_COLLECTION\"\n    ],\n    \"scriptInfo\": {\n      \"executionServiceDelegate\": \"string\",\n      \"hasScriptMacOs\": true,\n      \"hasScriptWindows\": false,\n      \"inputs\": [\n        {\n          \"allowCustomValue\": true,\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"options\": [\n            \"string\",\n            \"string\"\n          ],\n          \"usedByMacOs\": true,\n          \"usedByWindows\": false\n        },\n        {\n          \"allowCustomValue\": false,\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"options\": [\n            \"string\",\n            \"string\"\n          ],\n          \"usedByMacOs\": false,\n          \"usedByWindows\": true\n        }\n      ],\n      \"outputs\": [\n        {\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"usedByMacOs\": false,\n          \"usedByWindows\": false\n        },\n        {\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"usedByMacOs\": false,\n          \"usedByWindows\": true\n        }\n      ],\n      \"runAs\": \"LOCAL_SYSTEM\",\n      \"timeoutSeconds\": 4911\n    },\n    \"targeting\": {\n      \"apiEnabled\": true,\n      \"manualAllowMultipleDevices\": false,\n      \"manualEnabled\": true,\n      \"workflowEnabled\": false\n    },\n    \"uuid\": \"string\"\n  },\n  {\n    \"builtInContentVersion\": \"string\",\n    \"description\": \"string\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"origin\": \"string\",\n    \"purpose\": [\n      \"REMEDIATION\",\n      \"DATA_COLLECTION\"\n    ],\n    \"scriptInfo\": {\n      \"executionServiceDelegate\": \"string\",\n      \"hasScriptMacOs\": true,\n      \"hasScriptWindows\": true,\n      \"inputs\": [\n        {\n          \"allowCustomValue\": false,\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"options\": [\n            \"string\",\n            \"string\"\n          ],\n          \"usedByMacOs\": true,\n          \"usedByWindows\": true\n        },\n        {\n          \"allowCustomValue\": false,\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"options\": [\n            \"string\",\n            \"string\"\n          ],\n          \"usedByMacOs\": false,\n          \"usedByWindows\": false\n        }\n      ],\n      \"outputs\": [\n        {\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"usedByMacOs\": false,\n          \"usedByWindows\": true\n        },\n        {\n          \"description\": \"string\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"usedByMacOs\": false,\n          \"usedByWindows\": true\n        }\n      ],\n      \"runAs\": \"DELEGATE_TO_SERVICE\",\n      \"timeoutSeconds\": 3407\n    },\n    \"targeting\": {\n      \"apiEnabled\": false,\n      \"manualAllowMultipleDevices\": true,\n      \"manualEnabled\": false,\n      \"workflowEnabled\": true\n    },\n    \"uuid\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "280516d9-1b21-425d-83b4-d3ed6c65aabe",
+              "name": "Bad request - Invalid request, see the error code for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0c560c25-a251-445f-bef7-218dfcda62ff",
+              "name": "Unauthorized - No valid authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f7761620-2551-4426-9a8a-923b3dd94550",
+              "name": "No permission - Not authorized to get remote action information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8974edb1-bc45-4c92-9e88-23fdaf9230ff",
+          "name": "Get remote action details",
+          "request": {
+            "name": "Get remote action details",
+            "description": {
+              "content": "Retrieve the configuration of a specific remote action.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "act",
+                "remote-action",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "nql-id",
+                  "value": "<string>",
+                  "description": "(Required) The nql-id of the remote action"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Nexthink instance name",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                },
+                {
+                  "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "832635ff-04b6-4a17-83bf-97d3aaed03c9",
+              "name": "OK - Remote action configuration retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nql-id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"builtInContentVersion\": \"string\",\n  \"description\": \"string\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"origin\": \"string\",\n  \"purpose\": [\n    \"DATA_COLLECTION\",\n    \"REMEDIATION\"\n  ],\n  \"scriptInfo\": {\n    \"executionServiceDelegate\": \"string\",\n    \"hasScriptMacOs\": false,\n    \"hasScriptWindows\": true,\n    \"inputs\": [\n      {\n        \"allowCustomValue\": false,\n        \"description\": \"string\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"usedByMacOs\": true,\n        \"usedByWindows\": false\n      },\n      {\n        \"allowCustomValue\": false,\n        \"description\": \"string\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"usedByMacOs\": false,\n        \"usedByWindows\": false\n      }\n    ],\n    \"outputs\": [\n      {\n        \"description\": \"string\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"usedByMacOs\": true,\n        \"usedByWindows\": false\n      },\n      {\n        \"description\": \"string\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\",\n        \"usedByMacOs\": false,\n        \"usedByWindows\": false\n      }\n    ],\n    \"runAs\": \"LOCAL_SYSTEM\",\n    \"timeoutSeconds\": 7164\n  },\n  \"targeting\": {\n    \"apiEnabled\": false,\n    \"manualAllowMultipleDevices\": true,\n    \"manualEnabled\": true,\n    \"workflowEnabled\": false\n  },\n  \"uuid\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c11bc2d0-f3e9-422b-8531-46f41af4b88f",
+              "name": "Unauthorized - no valid authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nql-id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a2f7e080-b77b-4542-b47d-1234cc82ddcb",
+              "name": "No permission - Not authorized to get that information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nql-id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a76d2f0b-30c7-4abd-b765-1eee657a2f8c",
+              "name": "Not found - No remote action associated with that NQL ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "act",
+                    "remote-action",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "nql-id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Nexthink instance name",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    },
+                    {
+                      "description": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Nexthink instance name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "instance",
+      "key": "instance"
+    },
+    {
+      "description": {
+        "content": "Nexthink cloud region (This can only be one of us,eu,pac,meta)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "us",
+      "key": "region"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.api.{{region}}.nexthink.cloud",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f21c7c25-50ad-4894-9be2-260b62848548",
+    "name": "Campaigns Remote actions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

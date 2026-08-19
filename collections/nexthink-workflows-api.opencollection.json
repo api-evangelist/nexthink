@@ -1,0 +1,166 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaigns Workflows API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Trigger a workflow V1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/workflows/execute",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Source",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Triggers the execution of a workflow."
+        },
+        {
+          "info": {
+            "name": "Trigger a workflow V2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v2/workflows/execute",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Source",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Triggers the execution of a workflow using external identifiers for `users` and `devices`.\nFor `users`, provide at least one of the following:\n- `sid`: The security identifier of the user\n- `upn`: The user's principal name (email format)\n- `uid`: A globally unique user identifier\nFor `devices`, provide at least one of the following:\n- `collectorUid`: The Collector UUID of the device\n- `name`: The name of the device\n- `uid`: A globally unique device identifier\nIf multiple users or devices match t"
+        },
+        {
+          "info": {
+            "name": "Trigger wait for event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/workflows/workflows/:workflowUuid/execution/:executionUuid/trigger",
+            "headers": [
+              {
+                "name": "Source",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workflowUuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "executionUuid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Triggers a waiting workflow execution."
+        },
+        {
+          "info": {
+            "name": "List workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/workflows",
+            "headers": [
+              {
+                "name": "Source",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dependency",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "triggerMethod",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fetchOnlyActiveWorkflows",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of workflows, including their configuration information. Use query parameters to filter the list of the workflows."
+        },
+        {
+          "info": {
+            "name": "Get workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/workflows/details",
+            "headers": [
+              {
+                "name": "Source",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "nqlId",
+                "value": "",
+                "type": "query",
+                "description": "The NQL ID of the workflow."
+              }
+            ]
+          },
+          "docs": "Returns the configuration of a specific workflow by NQL ID. Use `nqlId` to filter for a specific configured workflow."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

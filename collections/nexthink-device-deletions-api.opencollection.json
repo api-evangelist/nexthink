@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaigns device-deletions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "device-deletions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Schedule device deletions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/data-management/device/deletions",
+            "headers": [
+              {
+                "name": "x-request-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule the deletion of one or more devices from the Nexthink inventory.\n\nEach device must be identified by both its `uid` and `name`. Devices with malformed\nUIDs are rejected individually with status `INVALID` without failing the rest of the\nbatch.\n\nThe operation is asynchronous: the API returns `202 Accepted` once the deletions are\nqueued. Actual removal from the inventory happens in the background.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

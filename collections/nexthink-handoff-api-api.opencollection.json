@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaigns Handoff API API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Handoff API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hand off a conversation to Spark",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.api.{region}.nexthink.cloud/api/v1/spark/handoff",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Timezone",
+                "value": ""
+              },
+              {
+                "name": "User-Principal-Name",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Handles user message requests for which responses will be redirected to Spark MS Teams.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
