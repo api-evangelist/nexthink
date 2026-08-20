@@ -73,6 +73,8 @@ apis:
   humanURL: https://docs.nexthink.com/api/nql
   baseURL: https://instance.api.us.nexthink.cloud
   tags:
+  - Enrichment
+  tags_raw:
   - enrichment
   properties:
   - type: OpenAPI
@@ -113,6 +115,8 @@ apis:
   humanURL: https://docs.nexthink.com/api/nql
   baseURL: https://instance.api.us.nexthink.cloud
   tags:
+  - Remote Actions
+  tags_raw:
   - Remote actions
   properties:
   - type: OpenAPI
