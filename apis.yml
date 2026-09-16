@@ -1,14 +1,11 @@
 aid: nexthink
 name: Nexthink
-description: >-
-  Nexthink is a digital employee experience (DEX) management company. Its Infinity
-  platform combines real-time endpoint analytics, employee sentiment, and automated
-  remediation so IT teams can proactively detect and fix issues across every device.
-  Nexthink exposes a set of OAuth 2.0-secured public APIs — NQL (query), Remote
-  Actions, Workflows, Enrichment, Campaigns, Data Management, and Spark — that let
-  external tools pull DEX data and drive endpoint automation. Backed by Index
-  Ventures; added to the API Evangelist network and enriched from Nexthink's
-  published developer documentation.
+description: Nexthink is a digital employee experience (DEX) management company. Its Infinity platform
+  combines real-time endpoint analytics, employee sentiment, and automated remediation so IT teams can
+  proactively detect and fix issues across every device. Nexthink exposes a set of OAuth 2.0-secured public
+  APIs — NQL (query), Remote Actions, Workflows, Enrichment, Campaigns, Data Management, and Spark — that
+  let external tools pull DEX data and drive endpoint automation. Backed by Index Ventures; added to the
+  API Evangelist network and enriched from Nexthink's published developer documentation.
 deliveryModel:
   model: saas
   open_source: false
@@ -43,7 +40,7 @@ x-tier: enriched
 x-tier-reason: portfolio-lead-with-published-api-surface
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-09-16'
 tags:
 - Company
 - Business Applications
@@ -112,7 +109,7 @@ apis:
   - type: OpenAPI
     url: openapi/nexthink-export-api-openapi.yml
 - aid: nexthink:nexthink-handoff-api-api
-  name: Nexthink Handoff API API
+  name: Nexthink Handoff API
   description: The Handoff API API from Nexthink — 1 operation(s) for handoff api.
   humanURL: https://docs.nexthink.com/api/nql
   baseURL: https://instance.api.us.nexthink.cloud
@@ -178,7 +175,10 @@ common:
   url: https://www.nexthink.com/trust-center
 - type: X-MCPServerCandidate
   url: mcp/nexthink-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+    — a tool list derived from the published API contracts, not an existing server. The scorer already
+    read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+    surfaces with a server that does not exist.'
 - type: AgentSkill
   url: skills/_index.yml
 - type: AgenticAccess
