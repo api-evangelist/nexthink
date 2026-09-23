@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Campaigns Export API
-  version: 1.0.0
+  title: NQL Export API
+  version: 1.2.0
 servers:
 - url: https://{instance}.api.{region}.nexthink.cloud
   description: Nexthink Infinity instance API host
@@ -54,7 +54,6 @@ paths:
         in: header
         schema:
           type: string
-          nullable: false
       responses:
         '200':
           description: OK - Successful execution.
@@ -91,7 +90,6 @@ paths:
         in: header
         schema:
           type: string
-          nullable: false
       requestBody:
         description: The configuration of the execution
         content:
@@ -138,12 +136,10 @@ paths:
         required: true
         schema:
           type: string
-          nullable: false
       - name: Authorization
         in: header
         schema:
           type: string
-          nullable: false
       responses:
         '200':
           description: OK - Successful execution.
@@ -186,6 +182,19 @@ paths:
           description: Service unavailable.
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message with the description of the error.
+        code:
+          type: integer
+          description: Error code
+          format: int32
+        source:
+          type: string
+          description: Source of the error, if any.
     NqlApiExportRequest:
       required:
       - queryId
@@ -203,13 +212,20 @@ components:
             type: string
           description: 'Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\"alert_name\": \"my_alert\", \"alert_status\": \"Open\"}"'
         compression:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The compression algorithm for the export. If not set, no compression is applied.
           enum:
           - ZSTD
           - GZIP
           - NONE
-          nullable: true
+    NqlApiExportResponse:
+      type: object
+      properties:
+        exportId:
+          type: string
+          description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
     NqlApiStatusResponse:
       type: object
       properties:
@@ -221,43 +237,21 @@ components:
           - IN_PROGRESS
           - ERROR
           - COMPLETED
-          nullable: false
         resultsFileUrl:
-          type: string
+          type:
+          - string
+          - 'null'
           description: URL of the file with the content once the export has been completed.
-          nullable: true
         errorDescription:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Message with the description of the error.
-          nullable: true
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message with the description of the error.
-        code:
-          type: integer
-          description: Error code
-          format: int32
-        source:
-          type: string
-          description: Source of the error, if any.
-    NqlApiExportResponse:
-      type: object
-      properties:
-        exportId:
-          type: string
-          description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: jwt
 x-apievangelist-source: https://docs.nexthink.com/api/llms.txt
 x-apievangelist-method: searched
 x-apievangelist-generated: '2026-07-20'

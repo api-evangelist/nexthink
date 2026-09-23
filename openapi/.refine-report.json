@@ -1,14 +1,13 @@
 {
   "provider": "nexthink",
   "sources": [
-    "nexthink-campaigns-api-openapi.yml",
-    "nexthink-device-deletions-api-openapi.yml",
-    "nexthink-enrichment-api-openapi.yml",
-    "nexthink-execute-api-openapi.yml",
-    "nexthink-export-api-openapi.yml",
-    "nexthink-handoff-api-api-openapi.yml",
-    "nexthink-remote-actions-api-openapi.yml",
-    "nexthink-workflows-api-openapi.yml"
+    "_original/nexthink-campaigns-api-openapi.json",
+    "_original/nexthink-data-management-api-openapi.json",
+    "_original/nexthink-enrichment-api-openapi.json",
+    "_original/nexthink-nql-api-openapi.json",
+    "_original/nexthink-remote-actions-api-openapi.json",
+    "_original/nexthink-spark-api-openapi.json",
+    "_original/nexthink-workflows-openapi.json"
   ],
   "outputs": [
     "nexthink-campaigns-api-openapi.yml",
@@ -16,13 +15,33 @@
     "nexthink-enrichment-api-openapi.yml",
     "nexthink-execute-api-openapi.yml",
     "nexthink-export-api-openapi.yml",
-    "nexthink-handoff-api-api-openapi.yml",
     "nexthink-remote-actions-api-openapi.yml",
+    "nexthink-handoff-api-api-openapi.yml",
     "nexthink-workflows-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (7 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "nexthink-campaigns-api-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "nexthink-data-management-api-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nexthink-enrichment-api-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nexthink-nql-api-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "nexthink-remote-actions-api-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "nexthink-spark-api-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "nexthink-spark-api-openapi.json: declared missing tag: Handoff API",
+    "nexthink-workflows-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "nexthink-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nexthink-device-deletions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nexthink-enrichment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nexthink-execute-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nexthink-export-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nexthink-handoff-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nexthink-remote-actions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nexthink-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

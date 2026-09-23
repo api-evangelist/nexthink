@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Campaigns Remote actions API
+  title: Remote actions API
   version: 1.0.0
 servers:
 - url: https://{instance}.api.{region}.nexthink.cloud
@@ -20,12 +20,12 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: Remote actions
+- name: Remote Actions
 paths:
   /api/v1/act/execute:
     post:
       tags:
-      - Remote actions
+      - Remote Actions
       summary: Trigger a remote action
       description: Triggers the execution of a remote action for a set of devices.
       operationId: executeRA
@@ -33,8 +33,9 @@ paths:
       - name: Authorization
         in: header
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       requestBody:
         description: The configuration of the execution.
         content:
@@ -68,7 +69,7 @@ paths:
   /api/v1/act/remote-action:
     get:
       tags:
-      - Remote actions
+      - Remote Actions
       summary: List remote actions
       description: Retrieves the remote actions, including their configuration information.
       operationId: getAllRemoteActions
@@ -100,7 +101,7 @@ paths:
   /api/v1/act/remote-action/details:
     get:
       tags:
-      - Remote actions
+      - Remote Actions
       summary: Get remote action details
       description: Retrieve the configuration of a specific remote action.
       operationId: getRemoteActionByNqlId
@@ -139,44 +140,20 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Targeting:
+    ErrorResponse:
       required:
-      - apiEnabled
-      - manualAllowMultipleDevices
-      - manualEnabled
-      - workflowEnabled
+      - code
+      - message
       type: object
       properties:
-        apiEnabled:
-          type: boolean
-        manualEnabled:
-          type: boolean
-        workflowEnabled:
-          type: boolean
-        manualAllowMultipleDevices:
-          type: boolean
-    Output:
-      required:
-      - description
-      - id
-      - name
-      - type
-      - usedByMacOs
-      - usedByWindows
-      type: object
-      properties:
-        id:
+        code:
+          minLength: 1
           type: string
-        name:
+          description: error code
+        message:
+          minLength: 1
           type: string
-        type:
-          type: string
-        description:
-          type: string
-        usedByWindows:
-          type: boolean
-        usedByMacOs:
-          type: boolean
+          description: error message
     ScriptInfo:
       required:
       - executionServiceDelegate
@@ -207,83 +184,61 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Output'
-    TriggerInfoRequest:
-      type: object
-      properties:
-        externalSource:
-          type: string
-          description: The external application/tool name from where the action was triggered
-        reason:
-          maxLength: 500
-          type: string
-          description: 'The reason behind triggering the action '
-        externalReference:
-          type: string
-          description: The external ticket reference ID for which this action was taken
-    ErrorResponse:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          minLength: 1
-          type: string
-          description: error code
-        message:
-          minLength: 1
-          type: string
-          description: error message
-    ExecutionResponse:
-      required:
-      - requestId
-      type: object
-      properties:
-        requestId:
-          minLength: 1
-          type: string
-          description: The Nexthink ID of the request created that spawned the executions. Use this ID to query remote action executions in NQL.
-        expiresInMinutes:
-          maximum: 10080
-          minimum: 1
-          type: integer
-          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
-          format: int32
-    Purpose:
+    RunAsOption:
       type: string
       enum:
-      - DATA_COLLECTION
-      - REMEDIATION
-    ExecutionRequest:
+      - LOCAL_SYSTEM
+      - INTERACTIVE_USER
+      - DELEGATE_TO_SERVICE
+    Output:
       required:
-      - devices
-      - remoteActionId
+      - description
+      - id
+      - name
+      - type
+      - usedByMacOs
+      - usedByWindows
       type: object
       properties:
-        remoteActionId:
-          minLength: 1
+        id:
           type: string
-          description: The ID of the remote action to execute
-        params:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Any parameters to send to the script. Leave the object empty if there are none. Example: {StartType: "Automatic", StatusChange: "On", SetStartTypeTo: "Manual"}'
-        devices:
-          maxItems: 10000
-          minItems: 1
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        usedByWindows:
+          type: boolean
+        usedByMacOs:
+          type: boolean
+    Input:
+      required:
+      - allowCustomValue
+      - description
+      - id
+      - name
+      - options
+      - usedByMacOs
+      - usedByWindows
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        usedByWindows:
+          type: boolean
+        usedByMacOs:
+          type: boolean
+        options:
           type: array
-          description: Nexthink Collector IDs of the devices that the remote action should be executed on
           items:
             type: string
-        expiresInMinutes:
-          maximum: 10080
-          minimum: 60
-          type: integer
-          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
-          format: int32
-        triggerInfo:
-          $ref: '#/components/schemas/TriggerInfoRequest'
+        allowCustomValue:
+          type: boolean
     RemoteAction:
       required:
       - builtInContentVersion
@@ -317,48 +272,90 @@ components:
           $ref: '#/components/schemas/Targeting'
         scriptInfo:
           $ref: '#/components/schemas/ScriptInfo'
-    RunAsOption:
-      type: string
-      enum:
-      - LOCAL_SYSTEM
-      - INTERACTIVE_USER
-      - DELEGATE_TO_SERVICE
-    Input:
-      required:
-      - allowCustomValue
-      - description
-      - id
-      - name
-      - options
-      - usedByMacOs
-      - usedByWindows
+    TriggerInfoRequest:
       type: object
       properties:
-        id:
+        externalSource:
           type: string
-        name:
+          description: The external application/tool name from where the action was triggered
+        reason:
+          maxLength: 500
           type: string
-        description:
+          description: 'The reason behind triggering the action '
+        externalReference:
           type: string
-        usedByWindows:
+          description: The external ticket reference ID for which this action was taken
+    Targeting:
+      required:
+      - apiEnabled
+      - manualAllowMultipleDevices
+      - manualEnabled
+      - workflowEnabled
+      type: object
+      properties:
+        apiEnabled:
           type: boolean
-        usedByMacOs:
+        manualEnabled:
           type: boolean
-        options:
+        workflowEnabled:
+          type: boolean
+        manualAllowMultipleDevices:
+          type: boolean
+    ExecutionRequest:
+      required:
+      - devices
+      - remoteActionId
+      type: object
+      properties:
+        remoteActionId:
+          minLength: 1
+          type: string
+          description: The ID of the remote action to execute
+        params:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Any parameters to send to the script. Leave the object empty if there are none. Example: {StartType: "Automatic", StatusChange: "On", SetStartTypeTo: "Manual"}'
+        devices:
+          maxItems: 10000
+          minItems: 1
           type: array
+          description: Nexthink Collector IDs of the devices that the remote action should be executed on
           items:
             type: string
-        allowCustomValue:
-          type: boolean
+        expiresInMinutes:
+          maximum: 10080
+          minimum: 60
+          type: integer
+          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
+          format: int32
+        triggerInfo:
+          $ref: '#/components/schemas/TriggerInfoRequest'
+    ExecutionResponse:
+      required:
+      - requestId
+      type: object
+      properties:
+        requestId:
+          minLength: 1
+          type: string
+          description: The Nexthink ID of the request created that spawned the executions. Use this ID to query remote action executions in NQL.
+        expiresInMinutes:
+          maximum: 10080
+          minimum: 1
+          type: integer
+          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
+          format: int32
+    Purpose:
+      type: string
+      enum:
+      - DATA_COLLECTION
+      - REMEDIATION
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: jwt
 x-apievangelist-source: https://docs.nexthink.com/api/llms.txt
 x-apievangelist-method: searched
 x-apievangelist-generated: '2026-07-20'

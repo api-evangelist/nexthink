@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Campaigns API
   version: 1.0.0
@@ -60,6 +60,20 @@ paths:
           description: Forbidden - Error response when no permissions.
 components:
   schemas:
+    TriggerResponseDetails:
+      required:
+      - userSid
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: ID of the request created for the user that can be used to retrieve later the status and answers to the campaign, in case the request could be created successfully
+        userSid:
+          type: string
+          description: SID of the user
+        message:
+          type: string
+          description: Reason why a request could not be created for that user SID
     TriggerErrorResponse:
       required:
       - code
@@ -83,20 +97,6 @@ components:
           description: Identifiers of the requests created for each user SID sent in the request or corresponding message in case of error. Duplicate SIDs in the API request are filtered out from the response list.
           items:
             $ref: '#/components/schemas/TriggerResponseDetails'
-    TriggerResponseDetails:
-      required:
-      - userSid
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: ID of the request created for the user that can be used to retrieve later the status and answers to the campaign, in case the request could be created successfully
-        userSid:
-          type: string
-          description: SID of the user
-        message:
-          type: string
-          description: Reason why a request could not be created for that user SID
     TriggerRequest:
       required:
       - campaignNqlId

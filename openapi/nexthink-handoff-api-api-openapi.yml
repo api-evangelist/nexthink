@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Campaigns Handoff API API
+  title: Spark Handoff API
   version: 1.0.0
 servers:
 - url: https://{instance}.api.{region}.nexthink.cloud
@@ -27,9 +27,7 @@ paths:
       tags:
       - Handoff API
       summary: Hand off a conversation to Spark
-      description: 'Handles user message requests for which responses will be redirected to Spark MS Teams.
-
-        '
+      description: Handles user message requests for which responses will be redirected to Spark MS Teams.
       operationId: handleHandoffRequest
       parameters:
       - name: Authorization
@@ -84,6 +82,25 @@ paths:
           description: Service unavailable
 components:
   schemas:
+    HandoffConversationMessageRequest:
+      required:
+      - message
+      type: object
+      properties:
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: Optional metadata that will be passed through the request flow
+        message:
+          $ref: '#/components/schemas/MessageDTO'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
     FilePartByContent:
       required:
       - mimeType
@@ -93,6 +110,14 @@ components:
         fileContent:
           type: string
         mimeType:
+          minLength: 1
+          type: string
+    TextPartDTO:
+      required:
+      - text
+      type: object
+      properties:
+        text:
           minLength: 1
           type: string
     MessageDTO:
@@ -120,32 +145,6 @@ components:
       oneOf:
       - $ref: '#/components/schemas/TextPartDTO'
       - $ref: '#/components/schemas/FilePartByContent'
-    HandoffConversationMessageRequest:
-      required:
-      - message
-      type: object
-      properties:
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          nullable: true
-          description: Optional metadata that will be passed through the request flow
-        message:
-          $ref: '#/components/schemas/MessageDTO'
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-    TextPartDTO:
-      required:
-      - text
-      type: object
-      properties:
-        text:
-          minLength: 1
-          type: string
     PartType:
       type: string
       enum:
@@ -156,10 +155,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: jwt
 x-apievangelist-source: https://docs.nexthink.com/api/llms.txt
 x-apievangelist-method: searched
 x-apievangelist-generated: '2026-07-20'

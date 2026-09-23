@@ -1,0 +1,29 @@
+# Front Door AI Index — nexthink — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: nexthink
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.nexthink.com
+  final_host: nexthink.com
+  ownership: own
+  owner: nexthink
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 7
+  host_score: 7
+  density: 11.01
+  words: 636
+  tiers:
+    agentic: 1
+    core: 6
+    model: 0
+  ambiguous: 11
+  top_terms:
+    agent: 7
+    AI: 6
+    automation: 3
+    agentic: 1
+    intelligence: 1
