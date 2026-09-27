@@ -284,56 +284,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    DeviceData:
-      type: object
-      properties:
-        name:
-          type: string
-        uid:
-          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
-          type: string
-        collectorUid:
-          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
-          type: string
-    ErrorResponse:
-      required:
-      - code
-      - details
-      type: object
-      properties:
-        code:
-          minLength: 1
-          type: string
-        details:
-          type: string
-    WorkflowFilter.TriggerMethod:
-      type: string
-      enum:
-      - API
-      - MANUAL
-      - MANUAL_MULTIPLE
-      - SCHEDULER
-    ThinkletTriggerResponse:
-      required:
-      - requestUuid
-      type: object
-      properties:
-        requestUuid:
-          type: string
-          description: The request ID.
-          format: uuid
-    UserData:
-      type: object
-      properties:
-        uid:
-          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
-          type: string
-        upn:
-          pattern: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
-          type: string
-        sid:
-          pattern: ^S(-\d+){2,10}$|^0$
-          type: string
     ThinkletTriggerRequest:
       type: object
       properties:
@@ -390,6 +340,53 @@ components:
       enum:
       - ACTIVE
       - INACTIVE
+    ExecutionResponse:
+      required:
+      - executionsUuids
+      - requestUuid
+      type: object
+      properties:
+        requestUuid:
+          minLength: 1
+          type: string
+          description: The request ID. Use this ID to query workflow executions in NQL `workflow.executions.request_id`.
+        executionsUuids:
+          minItems: 1
+          type: array
+          description: A list of execution ID for each object targeted `workflow.executions.execution_id`.
+          items:
+            type: string
+      description: Each request spawns one or more executions depending on the input. All executions will have the same request ID and a unique execution ID.
+    DeviceData:
+      type: object
+      properties:
+        name:
+          type: string
+        uid:
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          type: string
+        collectorUid:
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          type: string
+    UserData:
+      type: object
+      properties:
+        uid:
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          type: string
+        upn:
+          pattern: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+          type: string
+        sid:
+          pattern: ^S(-\d+){2,10}$|^0$
+          type: string
+    WorkflowFilter.TriggerMethod:
+      type: string
+      enum:
+      - API
+      - MANUAL
+      - MANUAL_MULTIPLE
+      - SCHEDULER
     ExternalIdsExecutionRequest:
       required:
       - workflowId
@@ -449,23 +446,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Workflow'
-    ExecutionResponse:
+    ThinkletTriggerResponse:
       required:
-      - executionsUuids
       - requestUuid
       type: object
       properties:
         requestUuid:
+          type: string
+          description: The request ID.
+          format: uuid
+    ErrorResponse:
+      required:
+      - code
+      - details
+      type: object
+      properties:
+        code:
           minLength: 1
           type: string
-          description: The request ID. Use this ID to query workflow executions in NQL `workflow.executions.request_id`.
-        executionsUuids:
-          minItems: 1
-          type: array
-          description: A list of execution ID for each object targeted `workflow.executions.execution_id`.
-          items:
-            type: string
-      description: Each request spawns one or more executions depending on the input. All executions will have the same request ID and a unique execution ID.
+        details:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -182,19 +182,27 @@ paths:
           description: Service unavailable.
 components:
   schemas:
-    ErrorResponse:
+    NqlApiStatusResponse:
       type: object
       properties:
-        message:
+        status:
           type: string
+          description: Status of the export
+          enum:
+          - SUBMITTED
+          - IN_PROGRESS
+          - ERROR
+          - COMPLETED
+        resultsFileUrl:
+          type:
+          - string
+          - 'null'
+          description: URL of the file with the content once the export has been completed.
+        errorDescription:
+          type:
+          - string
+          - 'null'
           description: Message with the description of the error.
-        code:
-          type: integer
-          description: Error code
-          format: int32
-        source:
-          type: string
-          description: Source of the error, if any.
     NqlApiExportRequest:
       required:
       - queryId
@@ -226,27 +234,19 @@ components:
         exportId:
           type: string
           description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
-    NqlApiStatusResponse:
+    ErrorResponse:
       type: object
       properties:
-        status:
+        message:
           type: string
-          description: Status of the export
-          enum:
-          - SUBMITTED
-          - IN_PROGRESS
-          - ERROR
-          - COMPLETED
-        resultsFileUrl:
-          type:
-          - string
-          - 'null'
-          description: URL of the file with the content once the export has been completed.
-        errorDescription:
-          type:
-          - string
-          - 'null'
           description: Message with the description of the error.
+        code:
+          type: integer
+          description: Error code
+          format: int32
+        source:
+          type: string
+          description: Source of the error, if any.
   securitySchemes:
     bearerAuth:
       type: http

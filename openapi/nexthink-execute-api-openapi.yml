@@ -91,7 +91,7 @@ paths:
       - Execute
       summary: Execute an NQL V2
       description: Executes an NQL query and returns the results.
-      operationId: execute
+      operationId: postApiV2NqlExecute
       parameters:
       - name: Authorization
         in: header
@@ -148,21 +148,31 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '503':
           description: Service unavailable
+      x-operation-id-source: normalized
+      x-operation-id-original: execute
 components:
   schemas:
-    ErrorResponse:
+    DateTime:
       type: object
       properties:
-        message:
-          type: string
-          description: Message with the description of the error.
-        code:
+        year:
           type: integer
-          description: Error code
-          format: int32
-        source:
-          type: string
-          description: Source of the error, if any.
+          format: int64
+        month:
+          type: integer
+          format: int64
+        day:
+          type: integer
+          format: int64
+        hour:
+          type: integer
+          format: int64
+        minute:
+          type: integer
+          format: int64
+        second:
+          type: integer
+          format: int64
     NqlApiExecuteRequest:
       required:
       - queryId
@@ -179,6 +189,30 @@ components:
           additionalProperties:
             type: string
           description: 'Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\"alert_name\": \"my_alert\", \"alert_status\": \"Open\"}"'
+    NqlApiExecuteV2Response:
+      type: object
+      properties:
+        queryId:
+          type: string
+          description: Identifier of the executed query
+        executedQuery:
+          type: string
+          description: Final query executed with the parameters replaced
+        rows:
+          type: integer
+          description: Number of rows returned
+          format: int64
+        executionDateTime:
+          type: string
+          description: Date and time of the execution in ISO format
+        data:
+          type: array
+          description: List of rows with the data returned by the query execution
+          items:
+            type: object
+            properties:
+              key1: {}
+              key2: {}
     NqlApiExecuteResponse:
       type: object
       properties:
@@ -209,51 +243,19 @@ components:
             type: array
             items:
               type: object
-    DateTime:
+    ErrorResponse:
       type: object
       properties:
-        year:
-          type: integer
-          format: int64
-        month:
-          type: integer
-          format: int64
-        day:
-          type: integer
-          format: int64
-        hour:
-          type: integer
-          format: int64
-        minute:
-          type: integer
-          format: int64
-        second:
-          type: integer
-          format: int64
-    NqlApiExecuteV2Response:
-      type: object
-      properties:
-        queryId:
+        message:
           type: string
-          description: Identifier of the executed query
-        executedQuery:
-          type: string
-          description: Final query executed with the parameters replaced
-        rows:
+          description: Message with the description of the error.
+        code:
           type: integer
-          description: Number of rows returned
-          format: int64
-        executionDateTime:
+          description: Error code
+          format: int32
+        source:
           type: string
-          description: Date and time of the execution in ISO format
-        data:
-          type: array
-          description: List of rows with the data returned by the query execution
-          items:
-            type: object
-            properties:
-              key1: {}
-              key2: {}
+          description: Source of the error, if any.
   securitySchemes:
     bearerAuth:
       type: http

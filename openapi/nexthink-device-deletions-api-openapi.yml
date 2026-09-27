@@ -86,48 +86,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      description: Error details returned with 4xx and 5xx responses.
+    DeviceEntry:
+      description: Identifies a single device for deletion.
       type: object
-      properties:
-        code:
-          description: Stable machine-readable error code identifying the failure reason.
-          type: string
-          enum:
-          - EMPTY_REQUEST
-          - BATCH_SIZE_EXCEEDED
-          - INVALID_REQUEST
-          - EMPTY_TENANT
-          - FEATURE_NOT_ENABLED
-          - INTERNAL_ERROR
-        message:
-          description: Human-readable description of the error.
-          type: string
-    DeviceStatus:
-      description: Scheduling outcome for a single device.
-      type: object
+      required:
+      - uid
+      - name
       properties:
         uid:
-          description: UID of the device as submitted.
+          description: UID of the device as reported by the Nexthink Collector. Must be a valid UUID. A malformed value results in a per-device `INVALID` status rather than failing the whole batch.
           type: string
+          format: uuid
         name:
-          description: Name of the device as submitted.
+          description: Name of the device as reported by the Nexthink Collector. Must not be blank.
           type: string
-        status:
-          description: 'Per-device outcome:
-
-            - `SCHEDULED` — deletion queued successfully.
-
-            - `INVALID` — the UID is malformed; the device was skipped. The rest of the batch proceeds.
-
-            - `FAILED` — a downstream error prevented this device from being scheduled.
-
-            '
-          type: string
-          enum:
-          - SCHEDULED
-          - INVALID
-          - FAILED
+          minLength: 1
     DeviceDeletionResponse:
       description: Scheduling result for the deletion batch.
       type: object
@@ -159,21 +132,48 @@ components:
           maxItems: 100
           items:
             $ref: '#/components/schemas/DeviceEntry'
-    DeviceEntry:
-      description: Identifies a single device for deletion.
+    DeviceStatus:
+      description: Scheduling outcome for a single device.
       type: object
-      required:
-      - uid
-      - name
       properties:
         uid:
-          description: UID of the device as reported by the Nexthink Collector. Must be a valid UUID. A malformed value results in a per-device `INVALID` status rather than failing the whole batch.
+          description: UID of the device as submitted.
           type: string
-          format: uuid
         name:
-          description: Name of the device as reported by the Nexthink Collector. Must not be blank.
+          description: Name of the device as submitted.
           type: string
-          minLength: 1
+        status:
+          description: 'Per-device outcome:
+
+            - `SCHEDULED` — deletion queued successfully.
+
+            - `INVALID` — the UID is malformed; the device was skipped. The rest of the batch proceeds.
+
+            - `FAILED` — a downstream error prevented this device from being scheduled.
+
+            '
+          type: string
+          enum:
+          - SCHEDULED
+          - INVALID
+          - FAILED
+    ErrorResponse:
+      description: Error details returned with 4xx and 5xx responses.
+      type: object
+      properties:
+        code:
+          description: Stable machine-readable error code identifying the failure reason.
+          type: string
+          enum:
+          - EMPTY_REQUEST
+          - BATCH_SIZE_EXCEEDED
+          - INVALID_REQUEST
+          - EMPTY_TENANT
+          - FEATURE_NOT_ENABLED
+          - INTERNAL_ERROR
+        message:
+          description: Human-readable description of the error.
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

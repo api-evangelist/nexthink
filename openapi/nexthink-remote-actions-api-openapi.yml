@@ -140,20 +140,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          minLength: 1
-          type: string
-          description: error code
-        message:
-          minLength: 1
-          type: string
-          description: error message
     ScriptInfo:
       required:
       - executionServiceDelegate
@@ -184,107 +170,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Output'
-    RunAsOption:
-      type: string
-      enum:
-      - LOCAL_SYSTEM
-      - INTERACTIVE_USER
-      - DELEGATE_TO_SERVICE
-    Output:
-      required:
-      - description
-      - id
-      - name
-      - type
-      - usedByMacOs
-      - usedByWindows
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        usedByWindows:
-          type: boolean
-        usedByMacOs:
-          type: boolean
-    Input:
-      required:
-      - allowCustomValue
-      - description
-      - id
-      - name
-      - options
-      - usedByMacOs
-      - usedByWindows
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        usedByWindows:
-          type: boolean
-        usedByMacOs:
-          type: boolean
-        options:
-          type: array
-          items:
-            type: string
-        allowCustomValue:
-          type: boolean
-    RemoteAction:
-      required:
-      - builtInContentVersion
-      - description
-      - id
-      - name
-      - origin
-      - purpose
-      - scriptInfo
-      - targeting
-      - uuid
-      type: object
-      properties:
-        id:
-          type: string
-        uuid:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        origin:
-          type: string
-        builtInContentVersion:
-          type: string
-        purpose:
-          type: array
-          items:
-            $ref: '#/components/schemas/Purpose'
-        targeting:
-          $ref: '#/components/schemas/Targeting'
-        scriptInfo:
-          $ref: '#/components/schemas/ScriptInfo'
-    TriggerInfoRequest:
-      type: object
-      properties:
-        externalSource:
-          type: string
-          description: The external application/tool name from where the action was triggered
-        reason:
-          maxLength: 500
-          type: string
-          description: 'The reason behind triggering the action '
-        externalReference:
-          type: string
-          description: The external ticket reference ID for which this action was taken
     Targeting:
       required:
       - apiEnabled
@@ -331,6 +216,33 @@ components:
           format: int32
         triggerInfo:
           $ref: '#/components/schemas/TriggerInfoRequest'
+    Input:
+      required:
+      - allowCustomValue
+      - description
+      - id
+      - name
+      - options
+      - usedByMacOs
+      - usedByWindows
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        usedByWindows:
+          type: boolean
+        usedByMacOs:
+          type: boolean
+        options:
+          type: array
+          items:
+            type: string
+        allowCustomValue:
+          type: boolean
     ExecutionResponse:
       required:
       - requestId
@@ -351,6 +263,94 @@ components:
       enum:
       - DATA_COLLECTION
       - REMEDIATION
+    RunAsOption:
+      type: string
+      enum:
+      - LOCAL_SYSTEM
+      - INTERACTIVE_USER
+      - DELEGATE_TO_SERVICE
+    Output:
+      required:
+      - description
+      - id
+      - name
+      - type
+      - usedByMacOs
+      - usedByWindows
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        usedByWindows:
+          type: boolean
+        usedByMacOs:
+          type: boolean
+    TriggerInfoRequest:
+      type: object
+      properties:
+        externalSource:
+          type: string
+          description: The external application/tool name from where the action was triggered
+        reason:
+          maxLength: 500
+          type: string
+          description: 'The reason behind triggering the action '
+        externalReference:
+          type: string
+          description: The external ticket reference ID for which this action was taken
+    RemoteAction:
+      required:
+      - builtInContentVersion
+      - description
+      - id
+      - name
+      - origin
+      - purpose
+      - scriptInfo
+      - targeting
+      - uuid
+      type: object
+      properties:
+        id:
+          type: string
+        uuid:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        origin:
+          type: string
+        builtInContentVersion:
+          type: string
+        purpose:
+          type: array
+          items:
+            $ref: '#/components/schemas/Purpose'
+        targeting:
+          $ref: '#/components/schemas/Targeting'
+        scriptInfo:
+          $ref: '#/components/schemas/ScriptInfo'
+    ErrorResponse:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+          description: error code
+        message:
+          minLength: 1
+          type: string
+          description: error message
   securitySchemes:
     bearerAuth:
       type: http
