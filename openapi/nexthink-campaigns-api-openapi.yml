@@ -60,18 +60,17 @@ paths:
           description: Forbidden - Error response when no permissions.
 components:
   schemas:
-    TriggerErrorResponse:
+    TriggerSuccessResponse:
       required:
-      - code
-      - message
+      - requests
       type: object
       properties:
-        code:
-          type: string
-          description: The error code returned to the client.
-        message:
-          type: string
-          description: The error message returned to the client.
+        requests:
+          minItems: 1
+          type: array
+          description: Identifiers of the requests created for each user SID sent in the request or corresponding message in case of error. Duplicate SIDs in the API request are filtered out from the response list.
+          items:
+            $ref: '#/components/schemas/TriggerResponseDetails'
     TriggerResponseDetails:
       required:
       - userSid
@@ -86,6 +85,18 @@ components:
         message:
           type: string
           description: Reason why a request could not be created for that user SID
+    TriggerErrorResponse:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: The error code returned to the client.
+        message:
+          type: string
+          description: The error message returned to the client.
     TriggerRequest:
       required:
       - campaignNqlId
@@ -117,17 +128,6 @@ components:
           additionalProperties:
             type: string
           description: Key and value of the parameters within the campaign to be replaced to compose the final questions to be displayed. The provided keys must match exactly the IDs of all parameters of the campaign. In case a duplicated key is specified, only the latest value of the parameter will be taken into account.
-    TriggerSuccessResponse:
-      required:
-      - requests
-      type: object
-      properties:
-        requests:
-          minItems: 1
-          type: array
-          description: Identifiers of the requests created for each user SID sent in the request or corresponding message in case of error. Duplicate SIDs in the API request are filtered out from the response list.
-          items:
-            $ref: '#/components/schemas/TriggerResponseDetails'
   securitySchemes:
     bearerAuth:
       type: http

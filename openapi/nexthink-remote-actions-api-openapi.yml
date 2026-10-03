@@ -140,36 +140,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ScriptInfo:
-      required:
-      - executionServiceDelegate
-      - hasScriptMacOs
-      - hasScriptWindows
-      - inputs
-      - outputs
-      - runAs
-      - timeoutSeconds
-      type: object
-      properties:
-        executionServiceDelegate:
-          type: string
-        runAs:
-          $ref: '#/components/schemas/RunAsOption'
-        timeoutSeconds:
-          type: integer
-          format: int32
-        hasScriptWindows:
-          type: boolean
-        hasScriptMacOs:
-          type: boolean
-        inputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Input'
-        outputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Output'
     Targeting:
       required:
       - apiEnabled
@@ -186,63 +156,6 @@ components:
           type: boolean
         manualAllowMultipleDevices:
           type: boolean
-    ExecutionRequest:
-      required:
-      - devices
-      - remoteActionId
-      type: object
-      properties:
-        remoteActionId:
-          minLength: 1
-          type: string
-          description: The ID of the remote action to execute
-        params:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Any parameters to send to the script. Leave the object empty if there are none. Example: {StartType: "Automatic", StatusChange: "On", SetStartTypeTo: "Manual"}'
-        devices:
-          maxItems: 10000
-          minItems: 1
-          type: array
-          description: Nexthink Collector IDs of the devices that the remote action should be executed on
-          items:
-            type: string
-        expiresInMinutes:
-          maximum: 10080
-          minimum: 60
-          type: integer
-          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
-          format: int32
-        triggerInfo:
-          $ref: '#/components/schemas/TriggerInfoRequest'
-    Input:
-      required:
-      - allowCustomValue
-      - description
-      - id
-      - name
-      - options
-      - usedByMacOs
-      - usedByWindows
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        usedByWindows:
-          type: boolean
-        usedByMacOs:
-          type: boolean
-        options:
-          type: array
-          items:
-            type: string
-        allowCustomValue:
-          type: boolean
     ExecutionResponse:
       required:
       - requestId
@@ -258,52 +171,6 @@ components:
           type: integer
           description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
           format: int32
-    Purpose:
-      type: string
-      enum:
-      - DATA_COLLECTION
-      - REMEDIATION
-    RunAsOption:
-      type: string
-      enum:
-      - LOCAL_SYSTEM
-      - INTERACTIVE_USER
-      - DELEGATE_TO_SERVICE
-    Output:
-      required:
-      - description
-      - id
-      - name
-      - type
-      - usedByMacOs
-      - usedByWindows
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        usedByWindows:
-          type: boolean
-        usedByMacOs:
-          type: boolean
-    TriggerInfoRequest:
-      type: object
-      properties:
-        externalSource:
-          type: string
-          description: The external application/tool name from where the action was triggered
-        reason:
-          maxLength: 500
-          type: string
-          description: 'The reason behind triggering the action '
-        externalReference:
-          type: string
-          description: The external ticket reference ID for which this action was taken
     RemoteAction:
       required:
       - builtInContentVersion
@@ -337,6 +204,66 @@ components:
           $ref: '#/components/schemas/Targeting'
         scriptInfo:
           $ref: '#/components/schemas/ScriptInfo'
+    Output:
+      required:
+      - description
+      - id
+      - name
+      - type
+      - usedByMacOs
+      - usedByWindows
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        usedByWindows:
+          type: boolean
+        usedByMacOs:
+          type: boolean
+    Input:
+      required:
+      - allowCustomValue
+      - description
+      - id
+      - name
+      - options
+      - usedByMacOs
+      - usedByWindows
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        usedByWindows:
+          type: boolean
+        usedByMacOs:
+          type: boolean
+        options:
+          type: array
+          items:
+            type: string
+        allowCustomValue:
+          type: boolean
+    RunAsOption:
+      type: string
+      enum:
+      - LOCAL_SYSTEM
+      - INTERACTIVE_USER
+      - DELEGATE_TO_SERVICE
+    Purpose:
+      type: string
+      enum:
+      - DATA_COLLECTION
+      - REMEDIATION
     ErrorResponse:
       required:
       - code
@@ -351,6 +278,79 @@ components:
           minLength: 1
           type: string
           description: error message
+    ScriptInfo:
+      required:
+      - executionServiceDelegate
+      - hasScriptMacOs
+      - hasScriptWindows
+      - inputs
+      - outputs
+      - runAs
+      - timeoutSeconds
+      type: object
+      properties:
+        executionServiceDelegate:
+          type: string
+        runAs:
+          $ref: '#/components/schemas/RunAsOption'
+        timeoutSeconds:
+          type: integer
+          format: int32
+        hasScriptWindows:
+          type: boolean
+        hasScriptMacOs:
+          type: boolean
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Input'
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Output'
+    ExecutionRequest:
+      required:
+      - devices
+      - remoteActionId
+      type: object
+      properties:
+        remoteActionId:
+          minLength: 1
+          type: string
+          description: The ID of the remote action to execute
+        params:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Any parameters to send to the script. Leave the object empty if there are none. Example: {StartType: "Automatic", StatusChange: "On", SetStartTypeTo: "Manual"}'
+        devices:
+          maxItems: 10000
+          minItems: 1
+          type: array
+          description: Nexthink Collector IDs of the devices that the remote action should be executed on
+          items:
+            type: string
+        expiresInMinutes:
+          maximum: 10080
+          minimum: 60
+          type: integer
+          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
+          format: int32
+        triggerInfo:
+          $ref: '#/components/schemas/TriggerInfoRequest'
+    TriggerInfoRequest:
+      type: object
+      properties:
+        externalSource:
+          type: string
+          description: The external application/tool name from where the action was triggered
+        reason:
+          maxLength: 500
+          type: string
+          description: 'The reason behind triggering the action '
+        externalReference:
+          type: string
+          description: The external ticket reference ID for which this action was taken
   securitySchemes:
     bearerAuth:
       type: http

@@ -203,6 +203,25 @@ components:
           - string
           - 'null'
           description: Message with the description of the error.
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message with the description of the error.
+        code:
+          type: integer
+          description: Error code
+          format: int32
+        source:
+          type: string
+          description: Source of the error, if any.
+    NqlApiExportResponse:
+      type: object
+      properties:
+        exportId:
+          type: string
+          description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
     NqlApiExportRequest:
       required:
       - queryId
@@ -228,25 +247,6 @@ components:
           - ZSTD
           - GZIP
           - NONE
-    NqlApiExportResponse:
-      type: object
-      properties:
-        exportId:
-          type: string
-          description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message with the description of the error.
-        code:
-          type: integer
-          description: Error code
-          format: int32
-        source:
-          type: string
-          description: Source of the error, if any.
   securitySchemes:
     bearerAuth:
       type: http

@@ -67,48 +67,6 @@ paths:
                 $ref: '#/components/schemas/ForbiddenResponse'
 components:
   schemas:
-    Identification:
-      description: Identification information for the given object, composed of the name of the field and the value used to identify
-      type: object
-      properties:
-        name:
-          description: Name of the field to be used to identify the object
-          type: string
-          enum:
-          - device/device/name
-          - device/device/uid
-          - user/user/sid
-          - user/user/uid
-          - user/user/upn
-          - binary/binary/uid
-          - package/package/uid
-        value:
-          description: Value to be used to identify the object
-          type: string
-      required:
-      - name
-      - value
-    Error:
-      description: An error composed of a message and a code
-      type: object
-      properties:
-        message:
-          description: Error message with descriptive information about
-          minLength: 1
-          type: string
-        code:
-          description: Internal error code
-          minLength: 1
-          type: string
-    SuccessResponse:
-      description: Response when ALL objects have been processed correctly
-      type: object
-      properties:
-        status:
-          description: Status of the request
-          type: string
-          enum:
-          - success
     PartialSuccessResponse:
       description: Partial success response when some of the objects in the request contain errors but other objects are processed
       type: object
@@ -120,39 +78,6 @@ components:
           - partial_success
         errors:
           description: List of all the individual errors for those objects with error
-          type: array
-          minimum: 1
-          items:
-            $ref: '#/components/schemas/IndividualObjectError'
-    EnrichmentRequest:
-      description: Objects to be enriched (with desired fields and values) and domain (configurable)
-      type: object
-      properties:
-        enrichments:
-          description: List of enrichments
-          type: array
-          minimum: 1
-          maximum: 10000
-          items:
-            $ref: '#/components/schemas/Enrichment'
-        domain:
-          description: Domain for which the given enrichment applies. For information and tracking purposes mainly
-          minLength: 1
-          type: string
-      required:
-      - enrichments
-      - domain
-    BadRequestResponse:
-      description: Error response when ALL objects in the request contain errors
-      type: object
-      properties:
-        status:
-          description: Status of the request
-          type: string
-          enum:
-          - error
-        errors:
-          description: List of all the individual errors for all objects
           type: array
           minimum: 1
           items:
@@ -220,13 +145,6 @@ components:
           minimum: 1
           items:
             $ref: '#/components/schemas/Error'
-    ForbiddenResponse:
-      description: Error response when no permissions
-      type: object
-      properties:
-        message:
-          description: Error message when no permissions
-          type: string
     Enrichment:
       description: Enrichment composed of the identification information of the desired object and the fields to be enriched (names and values)
       type: object
@@ -247,6 +165,88 @@ components:
       required:
       - identification
       - fields
+    BadRequestResponse:
+      description: Error response when ALL objects in the request contain errors
+      type: object
+      properties:
+        status:
+          description: Status of the request
+          type: string
+          enum:
+          - error
+        errors:
+          description: List of all the individual errors for all objects
+          type: array
+          minimum: 1
+          items:
+            $ref: '#/components/schemas/IndividualObjectError'
+    Error:
+      description: An error composed of a message and a code
+      type: object
+      properties:
+        message:
+          description: Error message with descriptive information about
+          minLength: 1
+          type: string
+        code:
+          description: Internal error code
+          minLength: 1
+          type: string
+    ForbiddenResponse:
+      description: Error response when no permissions
+      type: object
+      properties:
+        message:
+          description: Error message when no permissions
+          type: string
+    EnrichmentRequest:
+      description: Objects to be enriched (with desired fields and values) and domain (configurable)
+      type: object
+      properties:
+        enrichments:
+          description: List of enrichments
+          type: array
+          minimum: 1
+          maximum: 10000
+          items:
+            $ref: '#/components/schemas/Enrichment'
+        domain:
+          description: Domain for which the given enrichment applies. For information and tracking purposes mainly
+          minLength: 1
+          type: string
+      required:
+      - enrichments
+      - domain
+    SuccessResponse:
+      description: Response when ALL objects have been processed correctly
+      type: object
+      properties:
+        status:
+          description: Status of the request
+          type: string
+          enum:
+          - success
+    Identification:
+      description: Identification information for the given object, composed of the name of the field and the value used to identify
+      type: object
+      properties:
+        name:
+          description: Name of the field to be used to identify the object
+          type: string
+          enum:
+          - device/device/name
+          - device/device/uid
+          - user/user/sid
+          - user/user/uid
+          - user/user/upn
+          - binary/binary/uid
+          - package/package/uid
+        value:
+          description: Value to be used to identify the object
+          type: string
+      required:
+      - name
+      - value
   securitySchemes:
     bearerAuth:
       type: http
