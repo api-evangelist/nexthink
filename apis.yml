@@ -49,7 +49,6 @@ tags:
 - IT Operations
 - Automation
 - Observability
-- DEX
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -141,6 +140,9 @@ apis:
   - type: OpenAPI
     url: openapi/nexthink-workflows-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/nexthink-capability-edges.yml
+  name: Nexthink Business Capability Map
 - type: Overlay
   url: overlays/nexthink-campaigns-api-overlay.yaml
 - type: DeveloperPortal
@@ -212,3 +214,5 @@ x-enrichment:
   status: enriched
   artifacts_added: 35
   pass: local-v1
+x-tags-removed:
+- DEX
