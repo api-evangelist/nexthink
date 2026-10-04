@@ -182,27 +182,6 @@ paths:
           description: Service unavailable.
 components:
   schemas:
-    NqlApiStatusResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Status of the export
-          enum:
-          - SUBMITTED
-          - IN_PROGRESS
-          - ERROR
-          - COMPLETED
-        resultsFileUrl:
-          type:
-          - string
-          - 'null'
-          description: URL of the file with the content once the export has been completed.
-        errorDescription:
-          type:
-          - string
-          - 'null'
-          description: Message with the description of the error.
     ErrorResponse:
       type: object
       properties:
@@ -216,12 +195,6 @@ components:
         source:
           type: string
           description: Source of the error, if any.
-    NqlApiExportResponse:
-      type: object
-      properties:
-        exportId:
-          type: string
-          description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
     NqlApiExportRequest:
       required:
       - queryId
@@ -247,6 +220,33 @@ components:
           - ZSTD
           - GZIP
           - NONE
+    NqlApiStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the export
+          enum:
+          - SUBMITTED
+          - IN_PROGRESS
+          - ERROR
+          - COMPLETED
+        resultsFileUrl:
+          type:
+          - string
+          - 'null'
+          description: URL of the file with the content once the export has been completed.
+        errorDescription:
+          type:
+          - string
+          - 'null'
+          description: Message with the description of the error.
+    NqlApiExportResponse:
+      type: object
+      properties:
+        exportId:
+          type: string
+          description: Export identifier to be used in the "status" operation to know the state of the export and to retrieve the URL of the file with the results.
   securitySchemes:
     bearerAuth:
       type: http

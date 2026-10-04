@@ -140,37 +140,113 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Targeting:
+    ErrorResponse:
       required:
-      - apiEnabled
-      - manualAllowMultipleDevices
-      - manualEnabled
-      - workflowEnabled
+      - code
+      - message
       type: object
       properties:
-        apiEnabled:
-          type: boolean
-        manualEnabled:
-          type: boolean
-        workflowEnabled:
-          type: boolean
-        manualAllowMultipleDevices:
-          type: boolean
-    ExecutionResponse:
-      required:
-      - requestId
-      type: object
-      properties:
-        requestId:
+        code:
           minLength: 1
           type: string
-          description: The Nexthink ID of the request created that spawned the executions. Use this ID to query remote action executions in NQL.
+          description: error code
+        message:
+          minLength: 1
+          type: string
+          description: error message
+    ExecutionRequest:
+      required:
+      - devices
+      - remoteActionId
+      type: object
+      properties:
+        remoteActionId:
+          minLength: 1
+          type: string
+          description: The ID of the remote action to execute
+        params:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Any parameters to send to the script. Leave the object empty if there are none. Example: {StartType: "Automatic", StatusChange: "On", SetStartTypeTo: "Manual"}'
+        devices:
+          maxItems: 10000
+          minItems: 1
+          type: array
+          description: Nexthink Collector IDs of the devices that the remote action should be executed on
+          items:
+            type: string
         expiresInMinutes:
           maximum: 10080
-          minimum: 1
+          minimum: 60
           type: integer
           description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
           format: int32
+        triggerInfo:
+          $ref: '#/components/schemas/TriggerInfoRequest'
+    Input:
+      required:
+      - allowCustomValue
+      - description
+      - id
+      - name
+      - options
+      - usedByMacOs
+      - usedByWindows
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        usedByWindows:
+          type: boolean
+        usedByMacOs:
+          type: boolean
+        options:
+          type: array
+          items:
+            type: string
+        allowCustomValue:
+          type: boolean
+    ScriptInfo:
+      required:
+      - executionServiceDelegate
+      - hasScriptMacOs
+      - hasScriptWindows
+      - inputs
+      - outputs
+      - runAs
+      - timeoutSeconds
+      type: object
+      properties:
+        executionServiceDelegate:
+          type: string
+        runAs:
+          $ref: '#/components/schemas/RunAsOption'
+        timeoutSeconds:
+          type: integer
+          format: int32
+        hasScriptWindows:
+          type: boolean
+        hasScriptMacOs:
+          type: boolean
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Input'
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Output'
+    RunAsOption:
+      type: string
+      enum:
+      - LOCAL_SYSTEM
+      - INTERACTIVE_USER
+      - DELEGATE_TO_SERVICE
     RemoteAction:
       required:
       - builtInContentVersion
@@ -204,6 +280,26 @@ components:
           $ref: '#/components/schemas/Targeting'
         scriptInfo:
           $ref: '#/components/schemas/ScriptInfo'
+    Purpose:
+      type: string
+      enum:
+      - DATA_COLLECTION
+      - REMEDIATION
+    ExecutionResponse:
+      required:
+      - requestId
+      type: object
+      properties:
+        requestId:
+          minLength: 1
+          type: string
+          description: The Nexthink ID of the request created that spawned the executions. Use this ID to query remote action executions in NQL.
+        expiresInMinutes:
+          maximum: 10080
+          minimum: 1
+          type: integer
+          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
+          format: int32
     Output:
       required:
       - description
@@ -226,118 +322,22 @@ components:
           type: boolean
         usedByMacOs:
           type: boolean
-    Input:
+    Targeting:
       required:
-      - allowCustomValue
-      - description
-      - id
-      - name
-      - options
-      - usedByMacOs
-      - usedByWindows
+      - apiEnabled
+      - manualAllowMultipleDevices
+      - manualEnabled
+      - workflowEnabled
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        usedByWindows:
+        apiEnabled:
           type: boolean
-        usedByMacOs:
+        manualEnabled:
           type: boolean
-        options:
-          type: array
-          items:
-            type: string
-        allowCustomValue:
+        workflowEnabled:
           type: boolean
-    RunAsOption:
-      type: string
-      enum:
-      - LOCAL_SYSTEM
-      - INTERACTIVE_USER
-      - DELEGATE_TO_SERVICE
-    Purpose:
-      type: string
-      enum:
-      - DATA_COLLECTION
-      - REMEDIATION
-    ErrorResponse:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          minLength: 1
-          type: string
-          description: error code
-        message:
-          minLength: 1
-          type: string
-          description: error message
-    ScriptInfo:
-      required:
-      - executionServiceDelegate
-      - hasScriptMacOs
-      - hasScriptWindows
-      - inputs
-      - outputs
-      - runAs
-      - timeoutSeconds
-      type: object
-      properties:
-        executionServiceDelegate:
-          type: string
-        runAs:
-          $ref: '#/components/schemas/RunAsOption'
-        timeoutSeconds:
-          type: integer
-          format: int32
-        hasScriptWindows:
+        manualAllowMultipleDevices:
           type: boolean
-        hasScriptMacOs:
-          type: boolean
-        inputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Input'
-        outputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Output'
-    ExecutionRequest:
-      required:
-      - devices
-      - remoteActionId
-      type: object
-      properties:
-        remoteActionId:
-          minLength: 1
-          type: string
-          description: The ID of the remote action to execute
-        params:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Any parameters to send to the script. Leave the object empty if there are none. Example: {StartType: "Automatic", StatusChange: "On", SetStartTypeTo: "Manual"}'
-        devices:
-          maxItems: 10000
-          minItems: 1
-          type: array
-          description: Nexthink Collector IDs of the devices that the remote action should be executed on
-          items:
-            type: string
-        expiresInMinutes:
-          maximum: 10080
-          minimum: 60
-          type: integer
-          description: The amount of time in minutes before the execution will expire if a targeted device does not come online to process it.
-          format: int32
-        triggerInfo:
-          $ref: '#/components/schemas/TriggerInfoRequest'
     TriggerInfoRequest:
       type: object
       properties:
