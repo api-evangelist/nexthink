@@ -1,0 +1,27 @@
+slug: nexthink
+provider: Nexthink
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Remote Actions
+  spec_file: nexthink-remote-actions-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.75
+  evidence: POST /api/v1/act/execute "Trigger a remote action"; schemas Targeting, ScriptInfo, RunAsOption,
+    ExecutionRequest
+  reason: Operations list and execute scripted remote actions against managed endpoints — automated IT
+    remediation/administration on devices, matching IT Operations Management (day-to-day IT operations,
+    monitoring, automation). Vendor framing of "automated remediation ... across every device" supports
+    this; some ambiguity vs IT Service Management.
