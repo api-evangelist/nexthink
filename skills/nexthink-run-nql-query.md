@@ -2,7 +2,7 @@
 name: Run a Nexthink NQL query
 description: Authenticate and execute a saved Nexthink NQL query, returning rows as JSON or CSV, using the asynchronous export path for large result sets.
 api: openapi/nexthink-nql-api-openapi.json
-operations: [execute, export-post, status]
+operations: [postApiV2NqlExecute, export-post, status]
 method: generated
 generated: '2026-07-20'
 ---
