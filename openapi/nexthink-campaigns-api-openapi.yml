@@ -60,17 +60,6 @@ paths:
           description: Forbidden - Error response when no permissions.
 components:
   schemas:
-    TriggerSuccessResponse:
-      required:
-      - requests
-      type: object
-      properties:
-        requests:
-          minItems: 1
-          type: array
-          description: Identifiers of the requests created for each user SID sent in the request or corresponding message in case of error. Duplicate SIDs in the API request are filtered out from the response list.
-          items:
-            $ref: '#/components/schemas/TriggerResponseDetails'
     TriggerRequest:
       required:
       - campaignNqlId
@@ -128,6 +117,17 @@ components:
         message:
           type: string
           description: The error message returned to the client.
+    TriggerSuccessResponse:
+      required:
+      - requests
+      type: object
+      properties:
+        requests:
+          minItems: 1
+          type: array
+          description: Identifiers of the requests created for each user SID sent in the request or corresponding message in case of error. Duplicate SIDs in the API request are filtered out from the response list.
+          items:
+            $ref: '#/components/schemas/TriggerResponseDetails'
   securitySchemes:
     bearerAuth:
       type: http

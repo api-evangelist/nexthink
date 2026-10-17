@@ -67,22 +67,6 @@ paths:
                 $ref: '#/components/schemas/ForbiddenResponse'
 components:
   schemas:
-    ForbiddenResponse:
-      description: Error response when no permissions
-      type: object
-      properties:
-        message:
-          description: Error message when no permissions
-          type: string
-    SuccessResponse:
-      description: Response when ALL objects have been processed correctly
-      type: object
-      properties:
-        status:
-          description: Status of the request
-          type: string
-          enum:
-          - success
     Enrichment:
       description: Enrichment composed of the identification information of the desired object and the fields to be enriched (names and values)
       type: object
@@ -103,6 +87,21 @@ components:
       required:
       - identification
       - fields
+    PartialSuccessResponse:
+      description: Partial success response when some of the objects in the request contain errors but other objects are processed
+      type: object
+      properties:
+        status:
+          description: Status of the request
+          type: string
+          enum:
+          - partial_success
+        errors:
+          description: List of all the individual errors for those objects with error
+          type: array
+          minimum: 1
+          items:
+            $ref: '#/components/schemas/IndividualObjectError'
     Error:
       description: An error composed of a message and a code
       type: object
@@ -115,17 +114,17 @@ components:
           description: Internal error code
           minLength: 1
           type: string
-    PartialSuccessResponse:
-      description: Partial success response when some of the objects in the request contain errors but other objects are processed
+    BadRequestResponse:
+      description: Error response when ALL objects in the request contain errors
       type: object
       properties:
         status:
           description: Status of the request
           type: string
           enum:
-          - partial_success
+          - error
         errors:
-          description: List of all the individual errors for those objects with error
+          description: List of all the individual errors for all objects
           type: array
           minimum: 1
           items:
@@ -147,6 +146,31 @@ components:
           minimum: 1
           items:
             $ref: '#/components/schemas/Error'
+    EnrichmentRequest:
+      description: Objects to be enriched (with desired fields and values) and domain (configurable)
+      type: object
+      properties:
+        enrichments:
+          description: List of enrichments
+          type: array
+          minimum: 1
+          maximum: 10000
+          items:
+            $ref: '#/components/schemas/Enrichment'
+        domain:
+          description: Domain for which the given enrichment applies. For information and tracking purposes mainly
+          minLength: 1
+          type: string
+      required:
+      - enrichments
+      - domain
+    ForbiddenResponse:
+      description: Error response when no permissions
+      type: object
+      properties:
+        message:
+          description: Error message when no permissions
+          type: string
     Identification:
       description: Identification information for the given object, composed of the name of the field and the value used to identify
       type: object
@@ -168,21 +192,6 @@ components:
       required:
       - name
       - value
-    BadRequestResponse:
-      description: Error response when ALL objects in the request contain errors
-      type: object
-      properties:
-        status:
-          description: Status of the request
-          type: string
-          enum:
-          - error
-        errors:
-          description: List of all the individual errors for all objects
-          type: array
-          minimum: 1
-          items:
-            $ref: '#/components/schemas/IndividualObjectError'
     Field:
       description: Enrichment information for the given object, composed of the name of field to be enriched and the desired value
       type: object
@@ -229,24 +238,15 @@ components:
       required:
       - name
       - value
-    EnrichmentRequest:
-      description: Objects to be enriched (with desired fields and values) and domain (configurable)
+    SuccessResponse:
+      description: Response when ALL objects have been processed correctly
       type: object
       properties:
-        enrichments:
-          description: List of enrichments
-          type: array
-          minimum: 1
-          maximum: 10000
-          items:
-            $ref: '#/components/schemas/Enrichment'
-        domain:
-          description: Domain for which the given enrichment applies. For information and tracking purposes mainly
-          minLength: 1
+        status:
+          description: Status of the request
           type: string
-      required:
-      - enrichments
-      - domain
+          enum:
+          - success
   securitySchemes:
     bearerAuth:
       type: http

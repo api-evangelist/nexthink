@@ -152,19 +152,6 @@ paths:
       x-operation-id-original: execute
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message with the description of the error.
-        code:
-          type: integer
-          description: Error code
-          format: int32
-        source:
-          type: string
-          description: Source of the error, if any.
     DateTime:
       type: object
       properties:
@@ -210,6 +197,35 @@ components:
             properties:
               key1: {}
               key2: {}
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message with the description of the error.
+        code:
+          type: integer
+          description: Error code
+          format: int32
+        source:
+          type: string
+          description: Source of the error, if any.
+    NqlApiExecuteRequest:
+      required:
+      - queryId
+      type: object
+      properties:
+        queryId:
+          maxLength: 255
+          minLength: 1
+          pattern: ^#[a-z0-9_]{2,255}$
+          type: string
+          description: Identifier of the query which is going to be executed.
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\"alert_name\": \"my_alert\", \"alert_status\": \"Open\"}"'
     NqlApiExecuteResponse:
       type: object
       properties:
@@ -240,22 +256,6 @@ components:
             type: array
             items:
               type: object
-    NqlApiExecuteRequest:
-      required:
-      - queryId
-      type: object
-      properties:
-        queryId:
-          maxLength: 255
-          minLength: 1
-          pattern: ^#[a-z0-9_]{2,255}$
-          type: string
-          description: Identifier of the query which is going to be executed.
-        parameters:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Key and value of the parameters to be replaced within the NQL query in order to compose a final query for execution. Example: {\"alert_name\": \"my_alert\", \"alert_status\": \"Open\"}"'
   securitySchemes:
     bearerAuth:
       type: http

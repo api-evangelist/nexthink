@@ -82,22 +82,6 @@ paths:
           description: Service unavailable
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-    FilePartByContent:
-      required:
-      - mimeType
-      - fileContent
-      type: object
-      properties:
-        fileContent:
-          type: string
-        mimeType:
-          minLength: 1
-          type: string
     HandoffConversationMessageRequest:
       required:
       - message
@@ -112,19 +96,6 @@ components:
           description: Optional metadata that will be passed through the request flow
         message:
           $ref: '#/components/schemas/MessageDTO'
-    PartType:
-      type: string
-      enum:
-      - TEXT
-      - FILE
-    TextPartDTO:
-      required:
-      - text
-      type: object
-      properties:
-        text:
-          minLength: 1
-          type: string
     PartDTO:
       type: object
       required:
@@ -140,6 +111,30 @@ components:
       oneOf:
       - $ref: '#/components/schemas/TextPartDTO'
       - $ref: '#/components/schemas/FilePartByContent'
+    TextPartDTO:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          minLength: 1
+          type: string
+    FilePartByContent:
+      required:
+      - mimeType
+      - fileContent
+      type: object
+      properties:
+        fileContent:
+          type: string
+        mimeType:
+          minLength: 1
+          type: string
+    PartType:
+      type: string
+      enum:
+      - TEXT
+      - FILE
     MessageDTO:
       required:
       - parts
@@ -150,6 +145,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PartDTO'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

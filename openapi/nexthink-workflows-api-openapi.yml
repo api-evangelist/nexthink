@@ -284,22 +284,16 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      required:
-      - code
-      - details
+    ThinkletTriggerRequest:
       type: object
       properties:
-        code:
-          minLength: 1
-          type: string
-        details:
-          type: string
-    Workflow.Status:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
+        parameters:
+          allOf:
+          - type: object
+            additionalProperties:
+              minLength: 1
+              type: string
+          - description: Any parameters to send to the thinklet waiting for this trigger. Leave the object empty if there are none.
     ExecutionRequest:
       required:
       - workflowId
@@ -334,44 +328,43 @@ components:
             additionalProperties:
               type: string
           - description: "Any parameters that can be sent to the workflow. If your workflow has been configured with a parameter, then `params` is optional. \nLeave the object empty if there are no parameters.\n"
-    ExternalIdsExecutionRequest:
-      required:
-      - workflowId
-      - users
-      - devices
+    DeviceData:
       type: object
       properties:
-        workflowId:
+        name:
           type: string
-          description: The ID of the workflow to execute.
-        devices:
-          maxItems: 10000
-          type: array
-          description: Nexthink Collector IDs, device names and/or device UIDs of the devices that the workflow should be executed on.
-          items:
-            $ref: '#/components/schemas/DeviceData'
-        users:
-          maxItems: 10000
-          type: array
-          description: User's Security IDs, user's principal name and/or users UIDs that the workflow would target.
-          items:
-            $ref: '#/components/schemas/UserData'
-        params:
-          allOf:
-          - type: object
-            additionalProperties:
-              type: string
-          - description: Any parameters to send to the workflow. Leave the object empty if there are none.
-    ThinkletTriggerRequest:
+        uid:
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          type: string
+        collectorUid:
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          type: string
+    ExecutionResponse:
+      required:
+      - executionsUuids
+      - requestUuid
       type: object
       properties:
-        parameters:
-          allOf:
-          - type: object
-            additionalProperties:
-              minLength: 1
-              type: string
-          - description: Any parameters to send to the thinklet waiting for this trigger. Leave the object empty if there are none.
+        requestUuid:
+          minLength: 1
+          type: string
+          description: The request ID. Use this ID to query workflow executions in NQL `workflow.executions.request_id`.
+        executionsUuids:
+          minItems: 1
+          type: array
+          description: A list of execution ID for each object targeted `workflow.executions.execution_id`.
+          items:
+            type: string
+      description: Each request spawns one or more executions depending on the input. All executions will have the same request ID and a unique execution ID.
+    ThinkletTriggerResponse:
+      required:
+      - requestUuid
+      type: object
+      properties:
+        requestUuid:
+          type: string
+          description: The request ID.
+          format: uuid
     WorkflowFilter.TriggerMethod:
       type: string
       enum:
@@ -379,13 +372,17 @@ components:
       - MANUAL
       - MANUAL_MULTIPLE
       - SCHEDULER
-    WorkflowFilter.WorkflowDependency:
-      type: string
-      enum:
-      - USER
-      - DEVICE
-      - USER_AND_DEVICE
-      - NONE
+    ErrorResponse:
+      required:
+      - code
+      - details
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+        details:
+          type: string
     Workflow:
       required:
       - description
@@ -417,23 +414,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Workflow'
-    ExecutionResponse:
-      required:
-      - executionsUuids
-      - requestUuid
-      type: object
-      properties:
-        requestUuid:
-          minLength: 1
-          type: string
-          description: The request ID. Use this ID to query workflow executions in NQL `workflow.executions.request_id`.
-        executionsUuids:
-          minItems: 1
-          type: array
-          description: A list of execution ID for each object targeted `workflow.executions.execution_id`.
-          items:
-            type: string
-      description: Each request spawns one or more executions depending on the input. All executions will have the same request ID and a unique execution ID.
     UserData:
       type: object
       properties:
@@ -446,26 +426,46 @@ components:
         sid:
           pattern: ^S(-\d+){2,10}$|^0$
           type: string
-    DeviceData:
-      type: object
-      properties:
-        name:
-          type: string
-        uid:
-          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
-          type: string
-        collectorUid:
-          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
-          type: string
-    ThinkletTriggerResponse:
+    WorkflowFilter.WorkflowDependency:
+      type: string
+      enum:
+      - USER
+      - DEVICE
+      - USER_AND_DEVICE
+      - NONE
+    ExternalIdsExecutionRequest:
       required:
-      - requestUuid
+      - workflowId
+      - users
+      - devices
       type: object
       properties:
-        requestUuid:
+        workflowId:
           type: string
-          description: The request ID.
-          format: uuid
+          description: The ID of the workflow to execute.
+        devices:
+          maxItems: 10000
+          type: array
+          description: Nexthink Collector IDs, device names and/or device UIDs of the devices that the workflow should be executed on.
+          items:
+            $ref: '#/components/schemas/DeviceData'
+        users:
+          maxItems: 10000
+          type: array
+          description: User's Security IDs, user's principal name and/or users UIDs that the workflow would target.
+          items:
+            $ref: '#/components/schemas/UserData'
+        params:
+          allOf:
+          - type: object
+            additionalProperties:
+              type: string
+          - description: Any parameters to send to the workflow. Leave the object empty if there are none.
+    Workflow.Status:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
   securitySchemes:
     bearerAuth:
       type: http
